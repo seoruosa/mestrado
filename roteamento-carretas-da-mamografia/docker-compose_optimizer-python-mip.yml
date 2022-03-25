@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  notebook:
+    build:
+      context: .
+      dockerfile: Dockerfile.optimizer-python-mip
+    image: "optimizer-python-mip:0.0.1"
+    container_name: "gurobi-python-mip"
+    command: >
+        bash -c "jupyter notebook --notebook-dir=/opt/notebooks --ip='*' --port=8888 --no-browser --allow-root"
+    ports: 
+        - "8888:8888"
+    volumes:
+        - ./notebooks:/opt/notebooks
+        - .:/opt/project
+        - ./src:/opt/notebooks/src
+        - ./Instancias:/opt/notebooks/Instancias
+        - ./gurobi.lic:/opt/gurobi/gurobi.lic
+    tty:
+        true

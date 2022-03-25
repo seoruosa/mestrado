@@ -1,0 +1,24 @@
+FROM gurobi/optimizer:latest
+
+RUN python -m pip install \
+        notebook \
+        matplotlib \
+        numpy \
+        pandas \
+        sklearn \
+        folium \
+        xlrd==1.2.0 \
+        mip \
+        seaborn \
+        networkx \
+        pycparser \
+        mip \
+        decorator \
+        cffi \
+    && mkdir -p /opt/notebooks \
+    && mkdir -p /opt/project
+
+EXPOSE "8888"
+
+CMD [ "bash" ]
+
