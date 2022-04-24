@@ -2,5 +2,5 @@ gurobi.lic
 .ipynb_checkpoints/
 */notebooks/Instancias/
 */notebooks/src/
-*/src/__pycache__/*
+**/__pycache__/*
 */Instancias/Vrp-Set-B/*
