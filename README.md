@@ -17,7 +17,9 @@ docker exec -it gurobi-python-mip /bin/bash
 
 Para compilar usando g++:
 ```
+cd /opt/project/src/cpp
 g++-10 -g fibo.cpp -o fibo -std=c++2a
+g++-10 -g read_instance.cpp -o out -std=c++2a && ./out
 ```
 
 Rodando um arquivo `.py` com um teste simples usando o MIP no bash
