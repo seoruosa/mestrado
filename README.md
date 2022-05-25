@@ -22,6 +22,19 @@ g++-10 -g fibo.cpp -o fibo -std=c++2a
 g++-10 -g read_instance.cpp -o out -std=c++2a && ./out
 ```
 
+Para inicializar o projeto usando cmake:
+
+```
+cd roteamento-carretas-da-mamografia/src/cpp/
+mkdir build && cd build && cmake --build .
+```
+
+e para construir:
+```
+cd roteamento-carretas-da-mamografia/src/cpp/build
+cmake .
+```
+
 Rodando um arquivo `.py` com um teste simples usando o MIP no bash
 ```
 python3 modelo_teste.py
@@ -37,7 +50,7 @@ _Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a li
 * ~~Compilando código C++ no docker~~
 * Configurar vscode para buildar/compilar cpp
 * ~~Mudar do notebook para um arquivo .py~~
-* Criar hello world no cmake
+* ~~Criar hello world no cmake~~
 * Funções:
   * Testar se uma solução é factível
   * Quantidade de veículos usados
