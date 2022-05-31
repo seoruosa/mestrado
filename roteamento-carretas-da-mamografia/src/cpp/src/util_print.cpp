@@ -1,4 +1,4 @@
-#include "util.h"
+#include "util_print.h"
 #include <iostream>
 
 
@@ -31,4 +31,13 @@ void print_mat(T &mat)
     {
         print_vec(el);
     }
+}
+
+void starline() { starline(45); }
+
+void starline(int num)
+{
+    for (int i = 0; i < num; i++)
+        std::cout << '*';
+    std::cout << std::endl;
 }

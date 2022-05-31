@@ -26,13 +26,13 @@ Para inicializar o projeto usando cmake:
 
 ```
 cd roteamento-carretas-da-mamografia/src/cpp/
-mkdir build && cd build && cmake --build .
+mkdir build && cd build && cmake ../
 ```
 
 e para construir:
 ```
 cd roteamento-carretas-da-mamografia/src/cpp/build
-cmake .
+cmake --build .
 ```
 
 Rodando um arquivo `.py` com um teste simples usando o MIP no bash
@@ -49,9 +49,27 @@ _Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a li
 * ~~Comandos para acessar bash do docker~~
 * ~~Compilando código C++ no docker~~
 * Configurar vscode para buildar/compilar cpp
+    * Passo a passo para debugar
 * ~~Mudar do notebook para um arquivo .py~~
 * ~~Criar hello world no cmake~~
 * Funções:
   * Testar se uma solução é factível
   * Quantidade de veículos usados
   * Distância percorrida por todos os veículos
+* criar teste unitário
+
+
+
+### NSGA-II (Need to implement)
+#### Could be reused
+* ~~crowding distance~~
+* ~~fast non dominated sort~~
+* ~~binary tournament selection~~
+    * ~~select pairs of individuals~~
+    * ~~compare individuals~~
+
+#### Dependent of problem (implemented a real coded version)
+* Chromossome
+* Recombination
+* Mutation
+* initialize_population
