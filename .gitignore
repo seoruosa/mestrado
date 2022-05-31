@@ -5,3 +5,4 @@ gurobi.lic
 **/__pycache__/*
 */Instancias/Vrp-Set-B/*
 **/build/
+**/playground.*
