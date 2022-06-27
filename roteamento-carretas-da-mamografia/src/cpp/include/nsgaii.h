@@ -13,6 +13,7 @@ std::vector<std::vector<float>> evaluate_pop_obj(auto &pop, auto f, const int& o
 std::vector<std::vector<float>> generate_next_generation(std::vector<std::vector<float>> &pop, float mutation_rate);
 std::vector<std::vector<float>> generate_next_generation(std::vector<std::vector<float>> &pop_obj_val, auto &pop, float mutation_rate);
 
+
 std::vector<float> mutation(std::vector<float> &child, const float &mutation_rate, std::default_random_engine &engine);
 
 void mutate(std::vector<float> &child, const float &mutation_rate, std::default_random_engine &engine);
@@ -27,3 +28,11 @@ std::vector<float> crowding_distance_assignment(std::vector<std::vector<float>> 
 std::vector<float> calculate_distance_all_pop(std::vector<std::vector<float>> &pop_obj_val, std::vector<std::vector<int>> &fronts);
 
 void NSGAII(int size_pop, int number_generations, auto f, int number_obj, float mutation_rate);
+
+
+// *******************************************************************************************************************************************
+// ********************************************* DOING SOME MODIFICATIONS ON FUNCTIONS *******************************************************
+// *******************************************************************************************************************************************
+
+// std::vector<std::vector<float>> initialize_population(int size_pop, int number_obj, float lower, float upper);
+// void NSGAII_mod(int size_pop, int number_generations, auto f, int number_obj, float mutation_rate, auto initialize_pop_func);

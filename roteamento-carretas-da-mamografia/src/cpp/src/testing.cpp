@@ -23,7 +23,9 @@ int main()
     dist_nodes_mat = dist_matrix(nodes_coord);
     dist_depots_nodes_mat = dist_matrix(nodes_coord, depots_coord);
     
-    print_mat(dist_depots_nodes_mat);
-    print_mat(dist_nodes_mat);
+    // print_mat(dist_depots_nodes_mat);
+    // std::cout << "***************************************" << std::endl;
+    // print_mat(dist_nodes_mat);
+    print_mat(demand_coord);
     
 }
