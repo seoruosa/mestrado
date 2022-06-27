@@ -138,7 +138,7 @@ std::vector<std::vector<float>> evaluate_pop_obj(auto &pop, auto f, const int &o
 std::vector<int> binary_tournament(std::vector<std::vector<float>> &pop_obj_val)
 {
     auto pairs_to_tournament = random_pairs(pop_obj_val.size());
-
+    // TODO correct this return
     auto [fronts, rank] = fast_non_dominated_sort(pop_obj_val);
     std::vector<float> distances = calculate_distance_all_pop(pop_obj_val, fronts);
 

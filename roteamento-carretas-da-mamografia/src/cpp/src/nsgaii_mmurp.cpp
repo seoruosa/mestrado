@@ -60,7 +60,7 @@ int main()
 
     int number_of_obj = 2;
 
-    auto [pop, pop_obj_val] = NSGAII_mod(100, 1000, demand.size(), calc, number_of_obj, 0.15, initialize_population);
+    auto [pop, pop_obj_val] = NSGAII_mod(100, 100, demand.size(), calc, number_of_obj, 0.15, initialize_population);
 
     print_solution_csv(pop, pop_obj_val);
 }
