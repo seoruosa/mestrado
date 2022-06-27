@@ -20,9 +20,11 @@ add_executable(read_instance src/testing.cpp)
 add_executable(playground src/playground.cpp)
 # add_executable(NSGAII src/nsgaii.cpp)
 add_executable(NSGAII_MMURP src/nsgaii_mmurp.cpp)
+add_executable(NSGAII_REAL src/nsgaii_real.cpp)
 
 # link libraries to main
 target_link_libraries(read_instance PUBLIC mylib)
 # target_link_libraries(NSGAII PUBLIC mylib)
 target_link_libraries(NSGAII_MMURP PUBLIC mylib)
 target_link_libraries(playground PUBLIC mylib)
+target_link_libraries(NSGAII_REAL PUBLIC mylib)
