@@ -58,6 +58,22 @@ _Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a li
   * Distância percorrida por todos os veículos
 * criar teste unitário
 
+* Na implementação do NSGAII 
+    * Adicionar melhores soluções na solução inicial
+    * Criar função de splitting do cromossomo que devolva o resultado mais "dominante"
+    * Testar função acima para o procedimento de busca
+* Implementar modelo para construir o pareto (talvez adicionando algum procedimento de busca junto (metaheuristica))
+* Testar a leitura das instâncias de MG e ES
+    * provavelmente será necessário a mudança do método de ler instancia
+* Implementar logging no algoritmo para colher medidas
+    * Onde salvar?
+* Criar função para salvar saída em formato csv formatado (com `,` no lugar de `.`)
+* __Criar função de calculo de métricas de problemas MO__
+    * Set Coverage Metric (Zitzler 1999)
+    * Spacing Measure (Schott 1995)
+    * S-metric (Zitzler & Thiele 1999)
+
+
 
 
 ### NSGA-II (Need to implement)

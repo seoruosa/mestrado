@@ -19,19 +19,27 @@
 #include "mmurp.h"
 #include "util_vrp.h"
 
-int main()
+
+int main(const int argc, const char *argv[])
 {
-    std::string filepath = "../../../Instancias/Vrp-Set-A/A-n50-m4-Q80.vrp";
-    // std::string filepath = "../../../Instancias/Vrp-Set-A/A-n249-m5-Q500.vrp";
+    // auto [instance_path, max_dist_between_nodes, max_number_vehicles, size_pop, number_generations, mutation_rate] = read_input(argc, argv);
+    NSGAII_MMURP_Params CONFIG = read_input(argc, argv);
+    
+    // std::cout << instance_path << std::endl;
+    // std::cout << max_dist_between_nodes << std::endl;
+    // std::cout << max_number_vehicles << std::endl;
+    // std::cout << size_pop << std::endl;
+    // std::cout << number_generations << std::endl;
+    // std::cout << mutation_rate << std::endl;
 
+    // Read instance
     int CAPACITY;
-
     std::vector<std::vector<int>> nodes_coord;
     std::vector<std::vector<int>> demand_mat;
     std::vector<std::vector<int>> depots_coord;
+    read_instance(nodes_coord, demand_mat, depots_coord, CAPACITY, CONFIG.instance_path);
 
-    read_instance(nodes_coord, demand_mat, depots_coord, CAPACITY, filepath);
-
+    // Build dist nodes x nodes and dist nodes x depots
     std::vector<std::vector<float>> dist_nodes_mat;
     std::vector<std::vector<float>> dist_depots_nodes_mat;
 
@@ -47,20 +55,17 @@ int main()
         demand.push_back(demand_node[0]);
     }
 
-    float max_dist_between_nodes = 200;
-    int max_number_vehicles = 10;
-
     auto calc = [&](Individual x)
     {
         auto [demanda_atendida, dist_percorrida] = splitting_chromossome(dist_nodes_mat, dist_depots_nodes_mat, x, demand,
-                                                                         CAPACITY, max_dist_between_nodes, max_number_vehicles);
+                                                                         CAPACITY, CONFIG.max_dist_between_nodes, CONFIG.max_number_vehicles);
 
         return std::vector<float>({dist_percorrida, -demanda_atendida});
     };
 
     int number_of_obj = 2;
 
-    auto [pop, pop_obj_val] = NSGAII_mod(100, 100, demand.size(), calc, number_of_obj, 0.15, initialize_population);
+    auto [pop, pop_obj_val] = NSGAII_mod(CONFIG.size_pop, CONFIG.number_generations, demand.size(), calc, number_of_obj, CONFIG.mutation_rate, initialize_population);
 
     print_solution_csv(pop, pop_obj_val);
 }
@@ -235,4 +240,46 @@ std::vector<Individual> generate_next_generation(std::vector<std::vector<float>>
     }
 
     return next_gen;
+}
+
+NSGAII_MMURP_Params read_input(const int &argc, const char *argv[])
+{
+    std::vector<std::string> arguments(argv + 1, argv + argc);
+
+    std::string instance_path = arguments[0];
+    float max_dist_between_nodes;
+    int max_number_vehicles;
+    int size_pop;
+    int number_generations;
+    float mutation_rate;
+
+    for (int i = 1; i < arguments.size(); i += 2)
+    {
+        auto arg_name = arguments[i];
+        auto arg_value = arguments[i + 1];
+
+        if (arg_name == "--maxDistNodes")
+        {
+            max_dist_between_nodes = std::stof(arg_value);
+        }
+        else if (arg_name == "--maxNumVehicles")
+        {
+            max_number_vehicles = std::stoi(arg_value);
+        }
+        else if (arg_name == "--sizePop")
+        {
+            size_pop = std::stoi(arg_value);
+        }
+        else if (arg_name == "--numGen")
+        {
+            number_generations = std::stoi(arg_value);
+        }
+        else if (arg_name == "--mutationRate")
+        {
+            mutation_rate = std::stof(arg_value);
+        }
+    }
+
+    
+    return {instance_path, max_dist_between_nodes, max_number_vehicles, size_pop, number_generations, mutation_rate};
 }
