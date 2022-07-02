@@ -5,8 +5,32 @@
 #include "read_instance.h"
 
 
-void read_instance(std::vector<std::vector<int>> &nodes_coord, std::vector<std::vector<int>> &demand_coord,
-                   std::vector<std::vector<int>> &depots_coord, int &capacity, const std::string &filepath)
+enum DistType {EUC_2D = 0, DIST = 1, NOT_FOUND = -1};
+DistType dist_type(std::string &edge_weight_type)
+{
+    DistType mode;
+
+    auto exist_on_type = [edge_weight_type](const auto word){return (edge_weight_type.find(word) != std::string::npos);};
+
+    if (exist_on_type("DIST"))
+    {
+        mode = DistType::DIST;
+    }
+    else if (exist_on_type("EUC_2D"))
+    {
+        mode = DistType::EUC_2D;
+    }
+    else
+    {
+        mode = DistType::NOT_FOUND;
+    }
+    
+    return mode;    
+}
+
+void read_instance(std::vector<std::vector<float>> &dist_nodes_nodes, std::vector<std::vector<float>> &dist_depots_nodes,
+                   std::vector<float> &demand, int &capacity, const std::string &name, const std::string &filepath)
+
 {
     std::ifstream file(filepath);
     std::string string_line;
@@ -19,10 +43,17 @@ void read_instance(std::vector<std::vector<int>> &nodes_coord, std::vector<std::
     int NODES;
     int DEPOTS;
 
+    std::vector<std::vector<int>> depots_coord;
+    std::vector<std::vector<int>> nodes_coord;
+
+    std::string EDGE_WEIGHT_TYPE;
+
+    DistType mode;
+
     auto get_number = [&](std::string a)
     {
         std::smatch n_match;
-        int output(INT16_MAX);
+        float output(INT16_MAX);
 
         if (std::regex_search(a, n_match, number_reg))
         {
@@ -50,35 +81,74 @@ void read_instance(std::vector<std::vector<int>> &nodes_coord, std::vector<std::
                     if (field == "CAPACITY")
                     {
                         capacity = get_number(value);
+                        // std::cout << "CAPACITY: " <<  capacity << std::endl;
                     }
                     else if (field == "NODES")
                     {
                         NODES = get_number(value);
+                        // std::cout << "NODES: " <<  NODES << std::endl;
                     }
                     else if (field == "DEPOTS")
                     {
                         DEPOTS = get_number(value);
+                        // std::cout << "DEPOTS: " <<  DEPOTS << std::endl;
+                    }
+                    else if (field == "EDGE_WEIGHT_TYPE")
+                    {
+                        EDGE_WEIGHT_TYPE = value;
+                        // std::cout << "EDGE_WEIGHT_TYPE: " <<  EDGE_WEIGHT_TYPE << std::endl;
+                        mode = dist_type(EDGE_WEIGHT_TYPE);
                     }
                 }
             }
-            else if (std::regex_search(string_line, match, name_reg))
+            else if ((std::regex_search(string_line, match, name_reg) & mode != DistType::NOT_FOUND))
             {
+                // std::cout << "ELSE IF: " <<  string_line << std::endl;
                 auto section_name = match[0].str();
 
                 if (section_name == "NODE_COORD_SECTION")
                 {
-                    nodes_coord = get_int_matrix(file, NODES, 2, 1);
+                    if (mode == DistType::DIST)
+                    {
+                        dist_nodes_nodes = get_float_matrix(file, NODES, NODES, 0);
+                    }
+                    else if (mode == DistType::EUC_2D)
+                    {
+                        // TODO fetch a float matrix
+                        nodes_coord = get_int_matrix(file, NODES, 2, 1);
+                    }
                 }
                 else if (section_name == "DEMAND_SECTION")
                 {
-                    demand_coord = get_int_matrix(file, NODES, 1, 1);
+                    auto a = get_float_matrix(file, NODES, 1, 1);
+                    
+                    for (auto &el : a)
+                    {
+                        demand.push_back(el[0]);
+                    }
+
+                    // std::cout << "DEMAND_SECTION: " << a.size() << " - " << a[0].size() << std::endl;
                 }
                 else if (section_name == "DEPOT_SECTION")
                 {
-                    depots_coord = get_int_matrix(file, DEPOTS, 2, 1);
+                    if (mode == DistType::DIST)
+                    {
+                        dist_depots_nodes = get_float_matrix(file, DEPOTS, NODES + DEPOTS, 0);
+                    }
+                    else if (mode == DistType::EUC_2D)
+                    {
+                        depots_coord = get_int_matrix(file, DEPOTS, 2, 1);
+                    }
                 }
             }
         }
+
+        if (mode == DistType::EUC_2D)
+        {
+            dist_nodes_nodes = dist_matrix(nodes_coord);
+            dist_depots_nodes = dist_matrix(nodes_coord, depots_coord);
+        }
+        
     }
     else
     {
@@ -107,6 +177,36 @@ std::vector<std::vector<int>> get_int_matrix(std::ifstream &file, int lines, int
                 {
                     auto number_match = *ind;
                     node_coord[i][j - skip_columns] = std::stoi(number_match.str());
+                }
+                j++;
+                ++ind;
+            }
+    }
+
+    return node_coord;
+}
+
+std::vector<std::vector<float>> get_float_matrix(std::ifstream &file, int lines, int columns, int skip_columns)
+{
+    std::string string_line;
+    std::regex number_reg("\\d+\\.{0,1}\\d*");
+    auto node_coord = std::vector<std::vector<float>>(lines, std::vector<float>(columns, 0));
+
+    for (int i = 0; i < lines; i++)
+    {
+        std::getline(file, string_line);
+
+        auto words_begin = std::sregex_iterator(string_line.begin(), string_line.end(), number_reg);
+        auto words_end = std::sregex_iterator();
+
+        int j = 0;
+        for (auto ind = words_begin; ind != words_end; ++ind)
+            while ((j < (columns + skip_columns)) & (ind != words_end))
+            {
+                if (j >= skip_columns)
+                {
+                    auto number_match = *ind;
+                    node_coord[i][j - skip_columns] = std::stof(number_match.str());
                 }
                 j++;
                 ++ind;

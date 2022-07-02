@@ -22,7 +22,6 @@
 
 int main(const int argc, const char *argv[])
 {
-    // auto [instance_path, max_dist_between_nodes, max_number_vehicles, size_pop, number_generations, mutation_rate] = read_input(argc, argv);
     NSGAII_MMURP_Params CONFIG = read_input(argc, argv);
     
     // std::cout << instance_path << std::endl;
@@ -33,27 +32,14 @@ int main(const int argc, const char *argv[])
     // std::cout << mutation_rate << std::endl;
 
     // Read instance
-    int CAPACITY;
-    std::vector<std::vector<int>> nodes_coord;
-    std::vector<std::vector<int>> demand_mat;
-    std::vector<std::vector<int>> depots_coord;
-    read_instance(nodes_coord, demand_mat, depots_coord, CAPACITY, CONFIG.instance_path);
-
-    // Build dist nodes x nodes and dist nodes x depots
+    int CAPACITY; // TODO should be float
     std::vector<std::vector<float>> dist_nodes_mat;
     std::vector<std::vector<float>> dist_depots_nodes_mat;
-
-    dist_nodes_mat = dist_matrix(nodes_coord);
-    dist_depots_nodes_mat = dist_matrix(nodes_coord, depots_coord);
-
-    // TODO correct the type of return of demand_mat of read_instance function
     std::vector<float> demand;
-    demand.reserve(demand_mat.size());
+    std::string name;
 
-    for (auto &demand_node : demand_mat)
-    {
-        demand.push_back(demand_node[0]);
-    }
+    // read_instance(nodes_coord, demand_mat, depots_coord, CAPACITY, CONFIG.instance_path);
+    read_instance(dist_nodes_mat, dist_depots_nodes_mat, demand, CAPACITY, name, CONFIG.instance_path);
 
     auto calc = [&](Individual x)
     {
