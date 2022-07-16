@@ -11,3 +11,5 @@ void starline(int num);
 void starline();
 
 void print_solution_csv(std::vector<std::vector<int>> pop, std::vector<std::vector<float>> pop_obj_val);
+std::string time_now(const char *fmt);
+std::string time_now();

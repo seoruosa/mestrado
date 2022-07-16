@@ -1,6 +1,8 @@
 #include "util_print.h"
 #include <iostream>
 
+#include <chrono>
+#include <ctime>
 
 template <class T>
 void print_vec(T &vec, const std::string sep)
@@ -8,12 +10,11 @@ void print_vec(T &vec, const std::string sep)
     for (auto el = vec.begin(); el != vec.end(); ++el)
     {
         std::cout << *el;
-        
-        if ( el+1 != vec.end())
+
+        if (el + 1 != vec.end())
         {
             std::cout << sep;
         }
-        
     }
     std::cout << std::endl;
 }
@@ -46,17 +47,17 @@ void print_solution_csv(std::vector<std::vector<int>> pop, std::vector<std::vect
 {
     int number_of_obj = pop_obj_val[0].size();
 
-    for (int i = 0; i < (int) pop[0].size(); i++)
+    for (int i = 0; i < (int)pop[0].size(); i++)
     {
         std::cout << "x_" << i << "; ";
     }
-    
+
     for (int i = 0; i < number_of_obj - 1; i++)
     {
         std::cout << "f_" << i << "; ";
     }
     std::cout << "f_" << (number_of_obj - 1) << std::endl;
-    
+
     for (size_t i = 0; i < pop.size(); i++)
     {
         for (auto &x : pop[i])
@@ -67,7 +68,7 @@ void print_solution_csv(std::vector<std::vector<int>> pop, std::vector<std::vect
         int j = 0;
         for (auto &x : pop_obj_val[i])
         {
-            if (j < (int) (pop_obj_val[i]).size() - 1)
+            if (j < (int)(pop_obj_val[i]).size() - 1)
             {
                 std::cout << x << "; ";
             }
@@ -80,4 +81,22 @@ void print_solution_csv(std::vector<std::vector<int>> pop, std::vector<std::vect
 
         std::cout << std::endl;
     }
+}
+
+std::string time_now(const char *fmt)
+{
+    // https://www.programiz.com/cpp-programming/library-function/ctime/strftime
+    auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+
+    char date_string[100];
+
+    std::strftime(date_string, 100, fmt, std::localtime(&time));
+    std::string out(date_string);
+
+    return out;
+};
+
+std::string time_now()
+{
+    return time_now("%Y-%m-%d_%H:%M:%S");
 }

@@ -60,9 +60,9 @@ _Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a li
 
 * Na implementação do NSGAII 
     * Adicionar melhores soluções na solução inicial
-    * Criar função de splitting do cromossomo que devolva o resultado mais "dominante"
+    * Criar função de splitting do cromossomo que devolva o resultado mais "dominante" -> "ótimo"
     * Testar função acima para o procedimento de busca
-* Implementar modelo para construir o pareto (talvez adicionando algum procedimento de busca junto (metaheuristica))
+* Implementar modelo para construir o pareto (talvez adicionando algum procedimento de busca junto (metaheuristica)) -> alg. memético
 * Testar a leitura das instâncias de MG e ES
     * provavelmente será necessário a mudança do método de ler instancia
 * Implementar logging no algoritmo para colher medidas
@@ -72,7 +72,7 @@ _Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a li
     * Set Coverage Metric (Zitzler 1999)
     * Spacing Measure (Schott 1995)
     * S-metric (Zitzler & Thiele 1999)
-
+* Criar visualizador de soluções
 
 
 

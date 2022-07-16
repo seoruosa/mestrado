@@ -20,16 +20,18 @@
 #include "util_vrp.h"
 
 
+void print_params(NSGAII_MMURP_Params config, int capacity, const std::string& name, std::ostream &out)
+{
+    out << "NAME: " << name << std::endl;
+    out << "MUTATION RATE: " << config.mutation_rate << std::endl;
+    out << "NUMBER GENERATIONS: " << config.number_generations << std::endl;
+    out << "POPULATION SIZE: " << config.size_pop << std::endl;
+    
+}
+
 int main(const int argc, const char *argv[])
 {
     NSGAII_MMURP_Params CONFIG = read_input(argc, argv);
-    
-    // std::cout << instance_path << std::endl;
-    // std::cout << max_dist_between_nodes << std::endl;
-    // std::cout << max_number_vehicles << std::endl;
-    // std::cout << size_pop << std::endl;
-    // std::cout << number_generations << std::endl;
-    // std::cout << mutation_rate << std::endl;
 
     // Read instance
     int CAPACITY; // TODO should be float
@@ -38,8 +40,20 @@ int main(const int argc, const char *argv[])
     std::vector<float> demand;
     std::string name;
 
-    // read_instance(nodes_coord, demand_mat, depots_coord, CAPACITY, CONFIG.instance_path);
+    // printar solução inicial em arquivo
+    // printar ultima solução em arquivo
+    
+    // gerar instancias a partir das instancias da literatura
+    //      colocar maxDistNodes dentro da instancia
+    //      colocar maxNumVehicles dentro da instancia
+
+    // criar programa que roda os experimentos
+    //      calcular ponto de referencia da instancia
+    //      calcular hipervolume
     read_instance(dist_nodes_mat, dist_depots_nodes_mat, demand, CAPACITY, name, CONFIG.instance_path);
+
+    
+
 
     auto calc = [&](Individual x)
     {
@@ -239,7 +253,7 @@ NSGAII_MMURP_Params read_input(const int &argc, const char *argv[])
     int number_generations;
     float mutation_rate;
 
-    for (int i = 1; i < arguments.size(); i += 2)
+    for (int i = 1; i < (int) arguments.size(); i += 2)
     {
         auto arg_name = arguments[i];
         auto arg_value = arguments[i + 1];

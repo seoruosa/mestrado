@@ -1,0 +1,991 @@
+City_number,City_name
+0,Abadia dos Dourados
+1,Abaet�
+2,Abre Campo
+3,Acaiaca
+4,A�ucena
+5,�gua Boa
+6,�gua Comprida
+7,Aguanil
+8,�guas Formosas
+9,�guas Vermelhas
+10,Aimor�s
+11,Aiuruoca
+12,Alagoa
+13,Albertina
+14,Al�m Para�ba
+15,Alfenas
+15,Alfenas
+16,Alfredo Vasconcelos
+17,Almenara
+17,Almenara
+18,Alpercata
+19,Alpin�polis
+20,Alterosa
+21,Alto Capara�
+22,Alto Jequitib�
+23,Alto Rio Doce
+24,Alvarenga
+25,Alvin�polis
+26,Alvorada de Minas
+27,Amparo do Serra
+28,Andradas
+29,Andrel�ndia
+29,Andrel�ndia
+30,Angel�ndia
+31,Ant�nio Carlos
+32,Ant�nio Dias
+33,Ant�nio Prado de Minas
+34,Ara�a�
+35,Aracitaba
+36,Ara�ua�
+36,Ara�ua�
+37,Araguari
+38,Arantina
+39,Araponga
+40,Arapor�
+41,Arapu�
+42,Ara�jos
+43,Arax�
+43,Arax�
+44,Arceburgo
+45,Arcos
+46,Areado
+47,Argirita
+48,Aricanduva
+49,Arinos
+50,Astolfo Dutra
+51,Atal�ia
+52,Augusto de Lima
+53,Baependi
+54,Baldim
+55,Bambu�
+56,Bandeira
+57,Bandeira do Sul
+58,Bar�o de Cocais
+59,Bar�o de Monte Alto
+60,Barbacena
+61,Barra Longa
+62,Barroso
+62,Barroso
+63,Bela Vista de Minas
+64,Belmiro Braga
+65,Belo Horizonte
+65,Belo Horizonte
+65,Belo Horizonte
+66,Belo Oriente
+67,Belo Vale
+68,Berilo
+69,Berizal
+70,Bert�polis
+71,Betim
+72,Bias Fortes
+73,Bicas
+74,Biquinhas
+75,Boa Esperan�a
+75,Boa Esperan�a
+75,Boa Esperan�a
+76,Bocaina de Minas
+77,Bocai�va
+78,Bom Despacho
+78,Bom Despacho
+79,Bom Jardim de Minas
+80,Bom Jesus da Penha
+81,Bom Jesus do Amparo
+82,Bom Jesus do Galho
+83,Bom Repouso
+84,Bom Sucesso
+85,Bonfim
+86,Bonfin�polis de Minas
+87,Bonito de Minas
+88,Borda da Mata
+89,Botelhos
+90,Botumirim
+91,Br�s Pires
+92,Brasil�ndia de Minas
+93,Bras�lia de Minas
+94,Bra�nas
+95,Braz�polis
+96,Brumadinho
+97,Bueno Brand�o
+98,Buen�polis
+99,Bugre
+100,Buritis
+101,Buritizeiro
+101,Buritizeiro
+102,Cabeceira Grande
+103,Cabo Verde
+104,Cachoeira da Prata
+105,Cachoeira de Minas
+106,Cachoeira de Paje�
+107,Cachoeira Dourada
+108,Caetan�polis
+109,Caet�
+109,Caet�
+110,Caiana
+111,Cajuri
+112,Caldas
+113,Camacho
+114,Camanducaia
+115,Cambu�
+115,Cambu�
+116,Cambuquira
+116,Cambuquira
+117,Campan�rio
+118,Campanha
+119,Campestre
+120,Campina Verde
+121,Campo Azul
+122,Campo Belo
+122,Campo Belo
+123,Campo do Meio
+124,Campo Florido
+125,Campos Altos
+126,Campos Gerais
+127,Cana Verde
+128,Cana�
+129,Can�polis
+130,Candeias
+130,Candeias
+131,Cantagalo
+132,Capara�
+133,Capela Nova
+134,Capelinha
+134,Capelinha
+135,Capetinga
+136,Capim Branco
+137,Capin�polis
+138,Capit�o Andrade
+139,Capit�o En�as
+140,Capit�lio
+140,Capit�lio
+141,Caputira
+142,Cara�
+143,Carana�ba
+144,Caranda�
+144,Caranda�
+145,Carangola
+145,Carangola
+145,Carangola
+146,Caratinga
+146,Caratinga
+146,Caratinga
+147,Carbonita
+148,Carea�u
+149,Carlos Chagas
+150,Carm�sia
+151,Carmo da Cachoeira
+152,Carmo da Mata
+153,Carmo de Minas
+154,Carmo do Cajuru
+155,Carmo do Parana�ba
+155,Carmo do Parana�ba
+156,Carmo do Rio Claro
+156,Carmo do Rio Claro
+157,Carm�polis de Minas
+157,Carm�polis de Minas
+158,Carneirinho
+159,Carrancas
+160,Carvalh�polis
+161,Carvalhos
+162,Casa Grande
+163,Cascalho Rico
+164,C�ssia
+165,Cataguases
+165,Cataguases
+165,Cataguases
+165,Cataguases
+166,Catas Altas
+167,Catas Altas da Noruega
+168,Catuji
+169,Catuti
+170,Caxambu
+170,Caxambu
+171,Cedro do Abaet�
+172,Central de Minas
+173,Centralina
+174,Ch�cara
+175,Chal�
+176,Chapada do Norte
+177,Chapada Ga�cha
+178,Chiador
+179,Cipot�nea
+180,Claraval
+181,Claro dos Po��es
+182,Cl�udio
+183,Coimbra
+184,Coluna
+185,Comendador Gomes
+186,Comercinho
+187,Concei��o da Aparecida
+188,Concei��o da Barra de Minas
+189,Concei��o das Alagoas
+190,Concei��o das Pedras
+191,Concei��o de Ipanema
+192,Concei��o do Mato Dentro
+193,Concei��o do Par�
+194,Concei��o do Rio Verde
+195,Concei��o dos Ouros
+196,C�nego Marinho
+197,Confins
+198,Congonhal
+199,Congonhas
+199,Congonhas
+200,Congonhas do Norte
+201,Conquista
+202,Conselheiro Lafaiete
+202,Conselheiro Lafaiete
+202,Conselheiro Lafaiete
+202,Conselheiro Lafaiete
+203,Conselheiro Pena
+203,Conselheiro Pena
+204,Consola��o
+205,Contagem
+205,Contagem
+205,Contagem
+206,Coqueiral
+207,Cora��o de Jesus
+208,Cordisburgo
+209,Cordisl�ndia
+210,Corinto
+211,Coroaci
+212,Coromandel
+213,Coronel Fabriciano
+213,Coronel Fabriciano
+213,Coronel Fabriciano
+214,Coronel Murta
+215,Coronel Pacheco
+216,Coronel Xavier Chaves
+217,C�rrego Danta
+218,C�rrego do Bom Jesus
+219,C�rrego Fundo
+220,C�rrego Novo
+221,Couto de Magalh�es de Minas
+222,Cris�lita
+223,Cristais
+224,Crist�lia
+225,Cristiano Otoni
+226,Cristina
+226,Cristina
+227,Crucil�ndia
+228,Cruzeiro da Fortaleza
+229,Cruz�lia
+230,Cuparaque
+231,Curral de Dentro
+232,Curvelo
+232,Curvelo
+232,Curvelo
+233,Datas
+234,Delfim Moreira
+235,Delfin�polis
+236,Delta
+237,Descoberto
+238,Desterro de Entre Rios
+239,Desterro do Melo
+240,Diamantina
+241,Diogo de Vasconcelos
+242,Dion�sio
+243,Divin�sia
+244,Divino
+245,Divino das Laranjeiras
+246,Divinol�ndia de Minas
+247,Divin�polis
+247,Divin�polis
+248,Divisa Alegre
+249,Divisa Nova
+250,Divis�polis
+251,Dom Bosco
+252,Dom Cavati
+253,Dom Joaquim
+254,Dom Silv�rio
+255,Dom Vi�oso
+256,Dona Eus�bia
+257,Dores de Campos
+257,Dores de Campos
+258,Dores de Guanh�es
+259,Dores do Indai�
+260,Dores do Turvo
+261,Dores�polis
+262,Douradoquara
+263,Durand�
+264,El�i Mendes
+265,Engenheiro Caldas
+266,Engenheiro Navarro
+267,Entre Folhas
+268,Entre Rios de Minas
+269,Erv�lia
+270,Esmeraldas
+271,Espera Feliz
+272,Espinosa
+273,Esp�rito Santo do Dourado
+274,Estiva
+274,Estiva
+275,Estrela Dalva
+276,Estrela do Indai�
+277,Estrela do Sul
+278,Eugen�polis
+279,Ewbank da C�mara
+280,Extrema
+280,Extrema
+281,Fama
+282,Faria Lemos
+283,Fel�cio dos Santos
+284,Felisburgo
+285,Felixl�ndia
+286,Fernandes Tourinho
+287,Ferros
+288,Fervedouro
+289,Florestal
+290,Formiga
+290,Formiga
+291,Formoso
+292,Fortaleza de Minas
+293,Fortuna de Minas
+294,Francisco Badar�
+295,Francisco Dumont
+296,Francisco S�
+297,Francisc�polis
+298,Frei Gaspar
+299,Frei Inoc�ncio
+300,Frei Lagonegro
+301,Fronteira
+302,Fronteira dos Vales
+303,Fruta de Leite
+304,Frutal
+304,Frutal
+305,Funil�ndia
+306,Galil�ia
+307,Gameleiras
+308,Glaucil�ndia
+309,Goiabeira
+310,Goian�
+311,Gon�alves
+312,Gonzaga
+313,Gouveia
+314,Governador Valadares
+314,Governador Valadares
+314,Governador Valadares
+314,Governador Valadares
+314,Governador Valadares
+315,Gr�o Mogol
+316,Grupiara
+317,Guanh�es
+317,Guanh�es
+318,Guap�
+319,Guaraciaba
+320,Guaraciama
+321,Guaran�sia
+322,Guarani
+323,Guarar�
+324,Guarda-Mor
+325,Guaxup�
+325,Guaxup�
+326,Guidoval
+327,Guimar�nia
+328,Guiricema
+329,Gurinhat�
+330,Heliodora
+331,Iapu
+332,Ibertioga
+333,Ibi�
+334,Ibia�
+335,Ibiracatu
+336,Ibiraci
+337,Ibirit�
+338,Ibiti�ra de Minas
+339,Ibituruna
+340,Icara� de Minas
+341,Igarap�
+342,Igaratinga
+343,Iguatama
+344,Ijaci
+345,Ilic�nea
+346,Imb� de Minas
+347,Inconfidentes
+348,Indaiabira
+349,Indian�polis
+350,Inga�
+351,Inhapim
+351,Inhapim
+352,Inha�ma
+353,Inimutaba
+354,Ipaba
+355,Ipanema
+356,Ipatinga
+356,Ipatinga
+356,Ipatinga
+357,Ipia�u
+358,Ipui�na
+358,Ipui�na
+359,Ira� de Minas
+360,Itabira
+360,Itabira
+361,Itabirinha
+362,Itabirito
+362,Itabirito
+363,Itacambira
+364,Itacarambi
+365,Itaguara
+366,Itaip�
+367,Itajub�
+368,Itamarandiba
+369,Itamarati de Minas
+370,Itambacuri
+371,Itamb� do Mato Dentro
+372,Itamogi
+373,Itamonte
+373,Itamonte
+374,Itanhandu
+375,Itanhomi
+376,Itaobim
+377,Itapagipe
+378,Itapecerica
+379,Itapeva
+380,Itatiaiu�u
+381,Ita� de Minas
+382,Ita�na
+382,Ita�na
+383,Itaverava
+384,Itinga
+385,Itueta
+386,Ituiutaba
+386,Ituiutaba
+387,Itumirim
+388,Iturama
+389,Itutinga
+390,Jaboticatubas
+390,Jaboticatubas
+391,Jacinto
+392,Jacu�
+393,Jacutinga
+394,Jaguara�u
+395,Ja�ba
+396,Jampruca
+397,Jana�ba
+397,Jana�ba
+398,Janu�ria
+398,Janu�ria
+399,Japara�ba
+400,Japonvar
+401,Jeceaba
+402,Jenipapo de Minas
+403,Jequeri
+404,Jequita�
+405,Jequitib�
+406,Jequitinhonha
+407,Jesu�nia
+408,Joa�ma
+409,Joan�sia
+410,Jo�o Monlevade
+410,Jo�o Monlevade
+411,Jo�o Pinheiro
+412,Joaquim Fel�cio
+413,Jord�nia
+414,Jos� Gon�alves de Minas
+415,Jos� Raydan
+416,Josen�polis
+417,Juatuba
+418,Juiz de Fora
+419,Juramento
+420,Juruaia
+421,Juven�lia
+422,Ladainha
+423,Lagamar
+424,Lagoa da Prata
+424,Lagoa da Prata
+424,Lagoa da Prata
+425,Lagoa dos Patos
+426,Lagoa Dourada
+427,Lagoa Formosa
+428,Lagoa Grande
+429,Lagoa Santa
+430,Lajinha
+431,Lambari
+431,Lambari
+432,Lamim
+433,Laranjal
+434,Lassance
+435,Lavras
+435,Lavras
+435,Lavras
+435,Lavras
+436,Leandro Ferreira
+437,Leme do Prado
+438,Leopoldina
+439,Liberdade
+440,Lima Duarte
+441,Limeira do Oeste
+442,Lontra
+443,Luisburgo
+444,Luisl�ndia
+445,Lumin�rias
+446,Luz
+447,Machacalis
+448,Machado
+448,Machado
+449,Madre de Deus de Minas
+450,Malacacheta
+451,Mamonas
+452,Manga
+453,Manhua�u
+453,Manhua�u
+453,Manhua�u
+453,Manhua�u
+454,Manhumirim
+455,Mantena
+456,Mar de Espanha
+456,Mar de Espanha
+457,Maravilhas
+458,Maria da F�
+459,Mariana
+459,Mariana
+460,Marilac
+461,M�rio Campos
+462,Marip� de Minas
+463,Marli�ria
+464,Marmel�polis
+465,Martinho Campos
+466,Martins Soares
+467,Mata Verde
+468,Materl�ndia
+469,Mateus Leme
+470,Mathias Lobato
+471,Matias Barbosa
+472,Matias Cardoso
+473,Matip�
+474,Mato Verde
+475,Matozinhos
+476,Matutina
+477,Medeiros
+478,Medina
+479,Mendes Pimentel
+480,Merc�s
+481,Mesquita
+482,Minas Novas
+482,Minas Novas
+483,Minduri
+484,Mirabela
+484,Mirabela
+485,Miradouro
+486,Mira�
+487,Mirav�nia
+488,Moeda
+489,Moema
+490,Monjolos
+491,Monsenhor Paulo
+492,Montalv�nia
+493,Monte Alegre de Minas
+494,Monte Azul
+495,Monte Belo
+496,Monte Carmelo
+496,Monte Carmelo
+497,Monte Formoso
+498,Monte Santo de Minas
+498,Monte Santo de Minas
+499,Monte Si�o
+500,Montes Claros
+500,Montes Claros
+500,Montes Claros
+501,Montezuma
+502,Morada Nova de Minas
+503,Morro da Gar�a
+504,Morro do Pilar
+505,Munhoz
+506,Muria�
+507,Mutum
+507,Mutum
+508,Muzambinho
+509,Nacip Raydan
+510,Nanuque
+511,Naque
+512,Natal�ndia
+513,Nat�rcia
+514,Nazareno
+515,Nepomuceno
+516,Ninheira
+517,Nova Bel�m
+518,Nova Era
+519,Nova Lima
+520,Nova M�dica
+521,Nova Ponte
+522,Nova Porteirinha
+523,Nova Resende
+523,Nova Resende
+524,Nova Serrana
+524,Nova Serrana
+525,Nova Uni�o
+526,Novo Cruzeiro
+527,Novo Oriente de Minas
+528,Novorizonte
+529,Olaria
+530,Olhos-d'�gua
+531,Ol�mpio Noronha
+532,Oliveira
+532,Oliveira
+533,Oliveira Fortes
+534,On�a de Pitangui
+535,Orat�rios
+536,Oriz�nia
+537,Ouro Branco
+538,Ouro Fino
+538,Ouro Fino
+538,Ouro Fino
+539,Ouro Preto
+540,Ouro Verde de Minas
+541,Padre Carvalho
+542,Padre Para�so
+543,Pai Pedro
+544,Paineiras
+545,Pains
+546,Paiva
+547,Palma
+547,Palma
+548,Palm�polis
+549,Papagaios
+550,Par� de Minas
+550,Par� de Minas
+551,Paracatu
+552,Paragua�u
+553,Parais�polis
+554,Paraopeba
+555,Passa Quatro
+556,Passa Tempo
+557,Passa Vinte
+558,Passab�m
+559,Passos
+559,Passos
+559,Passos
+559,Passos
+560,Patis
+561,Patos de Minas
+561,Patos de Minas
+562,Patroc�nio
+562,Patroc�nio
+563,Patroc�nio do Muria�
+564,Paula C�ndido
+565,Paulistas
+566,Pav�o
+567,Pe�anha
+567,Pe�anha
+568,Pedra Azul
+569,Pedra Bonita
+570,Pedra do Anta
+571,Pedra do Indai�
+572,Pedra Dourada
+572,Pedra Dourada
+573,Pedralva
+574,Pedras de Maria da Cruz
+575,Pedrin�polis
+576,Pedro Leopoldo
+577,Pedro Teixeira
+578,Pequeri
+579,Pequi
+579,Pequi
+580,Perdig�o
+581,Perdizes
+582,Perd�es
+583,Periquito
+584,Pescador
+585,Piau
+586,Piedade de Caratinga
+587,Piedade de Ponte Nova
+588,Piedade do Rio Grande
+589,Piedade dos Gerais
+590,Pimenta
+591,Pingo d'�gua
+592,Pint�polis
+593,Piracema
+594,Pirajuba
+595,Piranga
+596,Pirangu�u
+597,Piranguinho
+598,Pirapetinga
+599,Pirapora
+600,Pira�ba
+601,Pitangui
+602,Piumhi
+603,Planura
+604,Po�o Fundo
+605,Po�os de Caldas
+605,Po�os de Caldas
+606,Pocrane
+607,Pomp�u
+607,Pomp�u
+608,Ponte Nova
+609,Ponto Chique
+610,Ponto dos Volantes
+610,Ponto dos Volantes
+611,Porteirinha
+612,Porto Firme
+613,Pot�
+614,Pouso Alegre
+614,Pouso Alegre
+614,Pouso Alegre
+615,Pouso Alto
+616,Prados
+617,Prata
+618,Prat�polis
+619,Pratinha
+620,Presidente Bernardes
+621,Presidente Juscelino
+622,Presidente Kubitschek
+623,Presidente Oleg�rio
+624,Prudente de Morais
+625,Quartel Geral
+626,Queluzito
+627,Raposos
+628,Raul Soares
+628,Raul Soares
+629,Recreio
+630,Reduto
+631,Resende Costa
+632,Resplendor
+633,Ressaquinha
+634,Riachinho
+635,Riacho dos Machados
+636,Ribeir�o das Neves
+636,Ribeir�o das Neves
+637,Ribeir�o Vermelho
+638,Rio Acima
+639,Rio Casca
+640,Rio do Prado
+641,Rio Doce
+642,Rio Espera
+643,Rio Manso
+644,Rio Novo
+645,Rio Parana�ba
+646,Rio Pardo de Minas
+647,Rio Piracicaba
+648,Rio Pomba
+649,Rio Preto
+650,Rio Vermelho
+651,Rit�polis
+652,Rochedo de Minas
+653,Rodeiro
+654,Romaria
+655,Ros�rio da Limeira
+656,Rubelita
+657,Rubim
+658,Sabar�
+659,Sabin�polis
+660,Sacramento
+661,Salinas
+662,Salto da Divisa
+663,Santa B�rbara
+664,Santa B�rbara do Leste
+665,Santa B�rbara do Monte Verde
+666,Santa B�rbara do Tug�rio
+667,Santa Cruz de Minas
+668,Santa Cruz de Salinas
+669,Santa Cruz do Escalvado
+669,Santa Cruz do Escalvado
+670,Santa Efig�nia de Minas
+671,Santa F� de Minas
+672,Santa Helena de Minas
+673,Santa Juliana
+674,Santa Luzia
+675,Santa Margarida
+676,Santa Maria de Itabira
+677,Santa Maria do Salto
+678,Santa Maria do Sua�u�
+679,Santa Rita de Caldas
+680,Santa Rita de Ibitipoca
+681,Santa Rita de Jacutinga
+682,Santa Rita de Minas
+683,Santa Rita do Itueto
+684,Santa Rita do Sapuca�
+684,Santa Rita do Sapuca�
+684,Santa Rita do Sapuca�
+685,Santa Rosa da Serra
+686,Santa Vit�ria
+687,Santana da Vargem
+688,Santana de Cataguases
+689,Santana de Pirapama
+690,Santana do Deserto
+691,Santana do Garamb�u
+692,Santana do Jacar�
+693,Santana do Manhua�u
+694,Santana do Para�so
+695,Santana do Riacho
+696,Santana dos Montes
+697,Santo Ant�nio do Amparo
+698,Santo Ant�nio do Aventureiro
+699,Santo Ant�nio do Grama
+700,Santo Ant�nio do Itamb�
+701,Santo Ant�nio do Jacinto
+702,Santo Ant�nio do Monte
+702,Santo Ant�nio do Monte
+703,Santo Ant�nio do Retiro
+704,Santo Ant�nio do Rio Abaixo
+705,Santo Hip�lito
+706,Santos Dumont
+706,Santos Dumont
+707,S�o Bento Abade
+708,S�o Br�s do Sua�u�
+709,S�o Domingos das Dores
+710,S�o Domingos do Prata
+711,S�o F�lix de Minas
+712,S�o Francisco
+712,S�o Francisco
+713,S�o Francisco de Paula
+714,S�o Francisco de Sales
+715,S�o Francisco do Gl�ria
+716,S�o Geraldo
+717,S�o Geraldo da Piedade
+718,S�o Geraldo do Baixio
+719,S�o Gon�alo do Abaet�
+720,S�o Gon�alo do Par�
+721,S�o Gon�alo do Rio Abaixo
+722,S�o Gon�alo do Rio Preto
+723,S�o Gon�alo do Sapuca�
+724,S�o Gotardo
+725,S�o Jo�o Batista do Gl�ria
+726,S�o Jo�o da Lagoa
+727,S�o Jo�o da Mata
+728,S�o Jo�o da Ponte
+729,S�o Jo�o das Miss�es
+730,S�o Jo�o del Rei
+730,S�o Jo�o del Rei
+730,S�o Jo�o del Rei
+731,S�o Jo�o do Manhua�u
+732,S�o Jo�o do Manteninha
+733,S�o Jo�o do Oriente
+734,S�o Jo�o do Pacu�
+735,S�o Jo�o do Para�so
+736,S�o Jo�o Evangelista
+737,S�o Jo�o Nepomuceno
+738,S�o Joaquim de Bicas
+739,S�o Jos� da Barra
+740,S�o Jos� da Lapa
+741,S�o Jos� da Safira
+742,S�o Jos� da Varginha
+743,S�o Jos� do Alegre
+744,S�o Jos� do Divino
+745,S�o Jos� do Goiabal
+746,S�o Jos� do Jacuri
+746,S�o Jos� do Jacuri
+747,S�o Jos� do Mantimento
+748,S�o Louren�o
+749,S�o Miguel do Anta
+750,S�o Pedro da Uni�o
+751,S�o Pedro do Sua�u�
+752,S�o Pedro dos Ferros
+753,S�o Rom�o
+754,S�o Roque de Minas
+755,S�o Sebasti�o da Bela Vista
+756,S�o Sebasti�o da Vargem Alegre
+757,S�o Sebasti�o do Anta
+758,S�o Sebasti�o do Maranh�o
+759,S�o Sebasti�o do Oeste
+760,S�o Sebasti�o do Para�so
+760,S�o Sebasti�o do Para�so
+761,S�o Sebasti�o do Rio Preto
+762,S�o Sebasti�o do Rio Verde
+763,S�o Thom� das Letras
+764,S�o Tiago
+765,S�o Tom�s de Aquino
+766,S�o Vicente de Minas
+767,Sapuca�-Mirim
+768,Sardo�
+769,Sarzedo
+770,Sem-Peixe
+771,Senador Amaral
+772,Senador Cortes
+773,Senador Firmino
+774,Senador Jos� Bento
+775,Senador Modestino Gon�alves
+776,Senhora de Oliveira
+777,Senhora do Porto
+778,Senhora dos Rem�dios
+779,Sericita
+780,Seritinga
+781,Serra Azul de Minas
+782,Serra da Saudade
+783,Serra do Salitre
+784,Serra dos Aimor�s
+785,Serrania
+786,Serran�polis de Minas
+787,Serranos
+788,Serro
+789,Sete Lagoas
+789,Sete Lagoas
+789,Sete Lagoas
+789,Sete Lagoas
+790,Setubinha
+791,Silveir�nia
+792,Silvian�polis
+793,Sim�o Pereira
+794,Simon�sia
+795,Sobr�lia
+796,Soledade de Minas
+797,Tabuleiro
+798,Taiobeiras
+799,Taparuba
+800,Tapira
+801,Tapira�
+802,Taquara�u de Minas
+803,Tarumirim
+804,Teixeiras
+805,Te�filo Otoni
+805,Te�filo Otoni
+805,Te�filo Otoni
+806,Tim�teo
+807,Tiradentes
+808,Tiros
+809,Tocantins
+809,Tocantins
+810,Tocos do Moji
+811,Toledo
+812,Tombos
+813,Tr�s Cora��es
+813,Tr�s Cora��es
+813,Tr�s Cora��es
+814,Tr�s Marias
+815,Tr�s Pontas
+816,Tumiritinga
+817,Tupaciguara
+818,Turmalina
+819,Turvol�ndia
+820,Ub�
+820,Ub�
+820,Ub�
+821,Uba�
+822,Ubaporanga
+823,Uberaba
+823,Uberaba
+823,Uberaba
+824,Uberl�ndia
+824,Uberl�ndia
+825,Umburatiba
+826,Una�
+827,Uni�o de Minas
+828,Uruana de Minas
+829,Uruc�nia
+830,Urucuia
+831,Vargem Alegre
+832,Vargem Bonita
+833,Vargem Grande do Rio Pardo
+834,Varginha
+834,Varginha
+835,Varj�o de Minas
+836,V�rzea da Palma
+837,Varzel�ndia
+838,Vazante
+839,Verdel�ndia
+840,Veredinha
+841,Ver�ssimo
+842,Vermelho Novo
+843,Vespasiano
+844,Vi�osa
+844,Vi�osa
+844,Vi�osa
+845,Vieiras
+846,Virgem da Lapa
+847,Virg�nia
+847,Virg�nia
+848,Virgin�polis
+849,Virgol�ndia
+850,Visconde do Rio Branco
+850,Visconde do Rio Branco
+851,Volta Grande
+852,Wenceslau Braz

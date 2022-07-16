@@ -1,4 +1,8 @@
+from math import ceil
+from unittest import installHandler
 import numpy as np
+import argparse
+import os
 
 def MDOVRP(filepath):
     # --- LE AS INSTANCIAS ---
@@ -73,3 +77,21 @@ def MDOVRP(filepath):
             c = {(i, j) : np.hypot(coord_x[i] - coord_x[j], coord_y[i] - coord_y[j]) for i in V for j in V }
         
         return (N, D, V, Q, q, c, coord_x, coord_y)
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("instance", type=argparse.FileType('r'))
+
+    args = parser.parse_args()
+
+    filepath = args.instance.name
+    filename = os.path.basename(filepath)
+    instance_name = os.path.splitext(filename)[0]
+    
+    N, D, V, Q, q, c, coord_x, coord_y = MDOVRP(filepath)
+
+    print(f"Instancia: {instance_name}")
+    print(f"Demanda Total: {sum(q)}")
+    print(f"Capacidade veículo: {Q}")
+    print(f"Demanda/Capacidade(numero minimo de carros para atender 100% da demanda) : {ceil(sum(q)/Q)}")
+    print('*'*80)
