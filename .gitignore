@@ -6,3 +6,4 @@ gurobi.lic
 */Instancias/Vrp-Set-B/*
 **/build/
 **/playground.*
+.vscode/*
