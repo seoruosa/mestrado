@@ -1,5 +1,4 @@
 from math import ceil
-from unittest import installHandler
 import numpy as np
 import argparse
 import os
@@ -14,6 +13,7 @@ def MDOVRP(filepath):
     coord_y = []
     q = []
     c = {}
+    vehicles_depot = []
 
     with open(filepath, "r") as f:  
         while(True):
@@ -66,6 +66,10 @@ def MDOVRP(filepath):
                         for j, value in enumerate(line.split()):
                             c[(n + i,j)] = float(value)
                         q.append( 0 )
+            if "DEPOT_VEHICLES_SECTION" in line:
+                for i in range(m):
+                    line = f.readline()
+                    vehicles_depot.append(int(line))
 
             #print(line.strip())         
 
@@ -76,7 +80,7 @@ def MDOVRP(filepath):
         if edge_weight_type == EUC_2D:
             c = {(i, j) : np.hypot(coord_x[i] - coord_x[j], coord_y[i] - coord_y[j]) for i in V for j in V }
         
-        return (N, D, V, Q, q, c, coord_x, coord_y)
+    return (N, D, V, Q, q, c, vehicles_depot, coord_x, coord_y)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -88,10 +92,11 @@ if __name__ == '__main__':
     filename = os.path.basename(filepath)
     instance_name = os.path.splitext(filename)[0]
     
-    N, D, V, Q, q, c, coord_x, coord_y = MDOVRP(filepath)
+    N, D, V, Q, q, c, vehicles_depot, coord_x, coord_y = MDOVRP(filepath)
 
     print(f"Instancia: {instance_name}")
     print(f"Demanda Total: {sum(q)}")
     print(f"Capacidade veículo: {Q}")
     print(f"Demanda/Capacidade(numero minimo de carros para atender 100% da demanda) : {ceil(sum(q)/Q)}")
+    print(f"Veiculos por deposito: {', '.join((str(a) for a in vehicles_depot))}")
     print('*'*80)

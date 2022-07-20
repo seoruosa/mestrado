@@ -45,7 +45,7 @@ _Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a li
 --- 
 
 ## To Do
-
+* Mudar função python de leitura de instância para devolver um objeto instância (criar classe para tal...)
 * ~~Comandos para acessar bash do docker~~
 * ~~Compilando código C++ no docker~~
 * Configurar vscode para buildar/compilar cpp
@@ -73,6 +73,8 @@ _Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a li
     * Spacing Measure (Schott 1995)
     * S-metric (Zitzler & Thiele 1999)
 * Criar visualizador de soluções
+* vale limpar cidades com demanda zero???
+* Vale instalar mip com pypy???
 
 
 
