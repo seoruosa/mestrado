@@ -48,6 +48,8 @@ _Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a li
 * Mudar função python de leitura de instância para devolver um objeto instância (criar classe para tal...)
 * ~~Comandos para acessar bash do docker~~
 * ~~Compilando código C++ no docker~~
+* Adicionar passo a passo para rodar todas as funções (adicionar documentação de cada uma)
+* Criar função para adaptar instancias para o problema MOMMURP a partir das instancias do Cordeau(Vrp-Set-A) (são do artigo dele ???)
 * Configurar vscode para buildar/compilar cpp
     * Passo a passo para debugar
 * ~~Mudar do notebook para um arquivo .py~~
@@ -76,6 +78,12 @@ _Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a li
 * vale limpar cidades com demanda zero???
 * Vale instalar mip com pypy???
 
+# Função python para leitura de instância
+* Ler problemas variados
+    * MMURP
+    * MDOVRP
+* Retornar um objeto instância
+* Criar alguns testes para validar desenvolvimento
 
 
 ### NSGA-II (Need to implement)
