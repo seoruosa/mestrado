@@ -43,26 +43,26 @@ void starline(int num)
     std::cout << std::endl;
 }
 
-void print_solution_csv(std::vector<std::vector<int>> pop, std::vector<std::vector<float>> pop_obj_val)
+void print_solution_csv(std::vector<std::vector<int>> &pop, std::vector<std::vector<float>> &pop_obj_val, std::ostream &cout)
 {
     int number_of_obj = pop_obj_val[0].size();
 
     for (int i = 0; i < (int)pop[0].size(); i++)
     {
-        std::cout << "x_" << i << "; ";
+        cout << "x_" << i << "; ";
     }
 
     for (int i = 0; i < number_of_obj - 1; i++)
     {
-        std::cout << "f_" << i << "; ";
+        cout << "f_" << i << "; ";
     }
-    std::cout << "f_" << (number_of_obj - 1) << std::endl;
+    cout << "f_" << (number_of_obj - 1) << std::endl;
 
     for (size_t i = 0; i < pop.size(); i++)
     {
         for (auto &x : pop[i])
         {
-            std::cout << x << "; ";
+            cout << x << "; ";
         }
 
         int j = 0;
@@ -70,16 +70,53 @@ void print_solution_csv(std::vector<std::vector<int>> pop, std::vector<std::vect
         {
             if (j < (int)(pop_obj_val[i]).size() - 1)
             {
-                std::cout << x << "; ";
+                cout << x << "; ";
             }
             else
             {
-                std::cout << x;
+                cout << x;
             }
             ++j;
         }
 
-        std::cout << std::endl;
+        cout << std::endl;
+    }
+}
+
+void print_solution_csv(std::vector<std::vector<int>> &pop, std::vector<std::vector<float>> &pop_obj_val)
+{
+    print_solution_csv(pop, pop_obj_val, std::cout);
+}
+
+void print_obj_val(std::vector<std::vector<float>> &pop_obj_val)
+{
+    auto &cout = std::cout;
+
+    int number_of_obj = pop_obj_val[0].size();
+
+    for (int i = 0; i < number_of_obj - 1; i++)
+    {
+        cout << "f_" << i << "; ";
+    }
+    cout << "f_" << (number_of_obj - 1) << std::endl;
+
+    for (size_t i = 0; i < pop_obj_val.size(); i++)
+    {
+        int j = 0;
+        for (auto &x : pop_obj_val[i])
+        {
+            if (j < (int)(pop_obj_val[i]).size() - 1)
+            {
+                cout << x << "; ";
+            }
+            else
+            {
+                cout << x;
+            }
+            ++j;
+        }
+
+        cout << std::endl;
     }
 }
 

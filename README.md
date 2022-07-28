@@ -35,6 +35,13 @@ cd roteamento-carretas-da-mamografia/src/cpp/build
 cmake --build .
 ```
 
+para rodar:
+
+```
+./NSGAII_MMURP ../../../Instancias/old_testing_instances/Vrp-Set-A_25p/A-n249-m3-Q500-v7.vrp --maxDistNodes 200 --maxNumVehicles 10 --sizePop 50 --numGen 50 --mutationRate 0.1
+
+```
+
 Rodando um arquivo `.py` com um teste simples usando o MIP no bash
 ```
 python3 modelo_teste.py
@@ -50,6 +57,7 @@ _Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a li
 * ~~Compilando código C++ no docker~~
 * Adicionar passo a passo para rodar todas as funções (adicionar documentação de cada uma)
 * Criar função para adaptar instancias para o problema MOMMURP a partir das instancias do Cordeau(Vrp-Set-A) (são do artigo dele ???)
+* Validar que demandas das cidades podem ser atendidas por um único caminhão
 * Configurar vscode para buildar/compilar cpp
     * Passo a passo para debugar
 * ~~Mudar do notebook para um arquivo .py~~

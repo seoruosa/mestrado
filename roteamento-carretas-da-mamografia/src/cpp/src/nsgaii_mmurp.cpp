@@ -18,7 +18,8 @@
 // #include "seeds.h" // RND_ENGINE
 #include "mmurp.h"
 #include "util_vrp.h"
-
+#include <sstream>
+#include <algorithm>
 
 void print_params(NSGAII_MMURP_Params config, int capacity, const std::string& name, std::ostream &out)
 {
@@ -26,9 +27,76 @@ void print_params(NSGAII_MMURP_Params config, int capacity, const std::string& n
     out << "MUTATION RATE: " << config.mutation_rate << std::endl;
     out << "NUMBER GENERATIONS: " << config.number_generations << std::endl;
     out << "POPULATION SIZE: " << config.size_pop << std::endl;
+    out << "-----------------END_PARAMS-----------------" << std::endl;
     
 }
 
+std::string instance_name(std::string const &begin, int n, int m, int Q, int max_veh)
+{
+    std::ostringstream name;
+
+    name << begin << "-n" << n << "-m" << m << "-Q" << Q;
+
+    if (max_veh < std::numeric_limits<int>::max())
+    {
+       name << "-v" << max_veh; 
+    }
+
+    return name.str();
+}
+
+std::string file_name(std::string const &begin, int n, int m, int Q, int max_veh, std::string const &extension)
+{
+    std::ostringstream name;
+
+    name << instance_name(begin, n, m, Q, max_veh);
+
+        
+    name  << "-" << time_now("%Y%m%d%H%M%S") << "." << extension;
+
+    return name.str();
+}
+
+std::string file_name(std::string const &begin, std::string const &extension)
+{
+    std::ostringstream name;
+
+    name << begin << "-" << time_now("%Y%m%d%H%M%S") << "." << extension;
+
+    return name.str();
+}
+
+float max_dist(std::vector<std::vector<float>> &dist_nodes_mat, std::vector<std::vector<float>> &dist_depots_nodes_mat)
+{
+    float dist = 0;
+
+    for (auto &row : dist_nodes_mat)
+    {
+        float a = *std::max_element(row.begin(), row.end());
+
+        dist = std::max(dist, a);
+    }
+
+    for (auto &row : dist_depots_nodes_mat)
+    {
+        float a = *std::max_element(row.begin(), row.end());
+
+        dist = std::max(dist, a);
+    }
+    
+    return dist;
+}
+
+std::string ref_point(std::vector<std::vector<float>> &dist_nodes_mat, std::vector<std::vector<float>> &dist_depots_nodes_mat)
+{
+    std::ostringstream name;
+
+    float max_travel_dist = 1.1*max_dist(dist_nodes_mat, dist_depots_nodes_mat)*dist_depots_nodes_mat.size();
+
+    name << "REF_POINT: " <<  max_travel_dist << ", " << 0;
+
+    return name.str();
+} 
 int main(const int argc, const char *argv[])
 {
     NSGAII_MMURP_Params CONFIG = read_input(argc, argv);
@@ -38,19 +106,40 @@ int main(const int argc, const char *argv[])
     std::vector<std::vector<float>> dist_nodes_mat;
     std::vector<std::vector<float>> dist_depots_nodes_mat;
     std::vector<float> demand;
+    int max_number_vehicles;
     std::string name;
 
-    // printar solução inicial em arquivo
-    // printar ultima solução em arquivo
-    
-    // gerar instancias a partir das instancias da literatura
-    //      colocar maxDistNodes dentro da instancia
-    //      colocar maxNumVehicles dentro da instancia
+    read_instance(dist_nodes_mat, dist_depots_nodes_mat, demand, CAPACITY, max_number_vehicles, name, CONFIG.instance_path);
+    name = instance_name("A", dist_nodes_mat.size(), dist_depots_nodes_mat.size(), CAPACITY, max_number_vehicles);
 
+    auto REF_POINT = ref_point(dist_nodes_mat, dist_depots_nodes_mat);
+
+    
+    std::ofstream BEGIN_OUT_FILE(file_name(name, "in"), std::ios::ate);
+    std::ofstream END_OUT_FILE(file_name(name, "out"), std::ios::ate);
+
+    print_params(CONFIG, CAPACITY, name, BEGIN_OUT_FILE);
+    BEGIN_OUT_FILE << REF_POINT << std::endl;
+    print_params(CONFIG, CAPACITY, name, END_OUT_FILE);
+    END_OUT_FILE << REF_POINT << std::endl;
+
+    // DONE
+    // ~~gerar instancias a partir das instancias da literatura~~
+    //      colocar maxDistNodes dentro da instancia -> não precisa
+    //      ~~colocar maxNumVehicles dentro da instancia~~
+    
+    // ~~printar solução inicial em arquivo~~
+    // ~~printar ultima solução em arquivo~~
+
+    //      ~~calcular ponto de referencia da instancia~~
+    //      ~~calcular hipervolume~~
+    
+    // FAZER
+    
     // criar programa que roda os experimentos
-    //      calcular ponto de referencia da instancia
-    //      calcular hipervolume
-    read_instance(dist_nodes_mat, dist_depots_nodes_mat, demand, CAPACITY, name, CONFIG.instance_path);
+    
+    
+    // std::cout << "MAX_VEHICLES: " << max_number_vehicles << std::endl;
 
     
 
@@ -58,16 +147,23 @@ int main(const int argc, const char *argv[])
     auto calc = [&](Individual x)
     {
         auto [demanda_atendida, dist_percorrida] = splitting_chromossome(dist_nodes_mat, dist_depots_nodes_mat, x, demand,
-                                                                         CAPACITY, CONFIG.max_dist_between_nodes, CONFIG.max_number_vehicles);
+                                                                         CAPACITY, CONFIG.max_dist_between_nodes, max_number_vehicles);
 
         return std::vector<float>({dist_percorrida, -demanda_atendida});
     };
 
     int number_of_obj = 2;
 
-    auto [pop, pop_obj_val] = NSGAII_mod(CONFIG.size_pop, CONFIG.number_generations, demand.size(), calc, number_of_obj, CONFIG.mutation_rate, initialize_population);
+    auto [pop, pop_obj_val] = NSGAII_mod(CONFIG.size_pop, CONFIG.number_generations, demand.size(), calc, number_of_obj, 
+                                         CONFIG.mutation_rate, initialize_population, BEGIN_OUT_FILE, END_OUT_FILE);
 
-    print_solution_csv(pop, pop_obj_val);
+    // print_solution_csv(pop, pop_obj_val);
+    
+    std::cout << REF_POINT << std::endl;
+    print_obj_val(pop_obj_val);
+
+    BEGIN_OUT_FILE.close();
+    END_OUT_FILE.close();
 }
 
 std::vector<Individual> initialize_population(int size_pop, int n_cities)
@@ -83,8 +179,10 @@ std::vector<Individual> initialize_population(int size_pop, int n_cities)
     return pop;
 }
 
-std::tuple<std::vector<Individual>, std::vector<std::vector<float>>> NSGAII_mod(int size_pop, int number_generations, int number_cities, auto f, int number_obj, float mutation_rate, auto initialize_pop_func)
+std::tuple<std::vector<Individual>, std::vector<std::vector<float>>> NSGAII_mod(int size_pop, int number_generations, int number_cities, 
+    auto f, int number_obj, float mutation_rate, auto initialize_pop_func, std::ostream &BEGIN_FILE, std::ostream &END_FILE)
 {
+    auto start = std::chrono::high_resolution_clock::now();
     // initialize population
     // TODO need to create a initialization for MMURP
     // TODO parent_pop will be necessary to change type
@@ -94,6 +192,7 @@ std::tuple<std::vector<Individual>, std::vector<std::vector<float>>> NSGAII_mod(
     // TODO evaluate_pop_obj need to accept different parent_pop input type (prob not, because it's using auto...)
     std::vector<std::vector<float>> parent_pop_obj_val(evaluate_pop_obj(parent_pop, f, number_obj));
 
+    print_solution_csv(parent_pop, parent_pop_obj_val, BEGIN_FILE);
     // print_mat(parent_pop);
     // std::cout << "*****************************************" << std::endl;
     // print_mat(parent_pop_obj_val);
@@ -159,6 +258,12 @@ std::tuple<std::vector<Individual>, std::vector<std::vector<float>>> NSGAII_mod(
         parent_pop_obj_val = evaluate_pop_obj(parent_pop, f, number_obj);
     }
 
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> duration(end - start);
+
+    END_FILE << "DURACAO : " << duration.count() << std::endl;
+
+    print_solution_csv(parent_pop, parent_pop_obj_val, END_FILE);
     return {parent_pop, parent_pop_obj_val};
 }
 
@@ -248,7 +353,7 @@ NSGAII_MMURP_Params read_input(const int &argc, const char *argv[])
 
     std::string instance_path = arguments[0];
     float max_dist_between_nodes;
-    int max_number_vehicles;
+    // int max_number_vehicles;
     int size_pop;
     int number_generations;
     float mutation_rate;
@@ -262,10 +367,10 @@ NSGAII_MMURP_Params read_input(const int &argc, const char *argv[])
         {
             max_dist_between_nodes = std::stof(arg_value);
         }
-        else if (arg_name == "--maxNumVehicles")
-        {
-            max_number_vehicles = std::stoi(arg_value);
-        }
+        // else if (arg_name == "--maxNumVehicles")
+        // {
+        //     max_number_vehicles = std::stoi(arg_value);
+        // }
         else if (arg_name == "--sizePop")
         {
             size_pop = std::stoi(arg_value);
@@ -281,5 +386,6 @@ NSGAII_MMURP_Params read_input(const int &argc, const char *argv[])
     }
 
     
-    return {instance_path, max_dist_between_nodes, max_number_vehicles, size_pop, number_generations, mutation_rate};
+    // return {instance_path, max_dist_between_nodes, max_number_vehicles, size_pop, number_generations, mutation_rate};
+    return {instance_path, max_dist_between_nodes, size_pop, number_generations, mutation_rate};
 }

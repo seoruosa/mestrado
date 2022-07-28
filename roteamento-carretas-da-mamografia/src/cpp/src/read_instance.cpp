@@ -29,7 +29,7 @@ DistType dist_type(std::string &edge_weight_type)
 }
 
 void read_instance(std::vector<std::vector<float>> &dist_nodes_nodes, std::vector<std::vector<float>> &dist_depots_nodes,
-                   std::vector<float> &demand, int &capacity, const std::string &name, const std::string &filepath)
+                   std::vector<float> &demand, int &capacity, int &number_vehicles, const std::string &name, const std::string &filepath)
 
 {
     std::ifstream file(filepath);
@@ -62,6 +62,7 @@ void read_instance(std::vector<std::vector<float>> &dist_nodes_nodes, std::vecto
 
         return output;
     };
+    number_vehicles = std::numeric_limits<int>::max();
 
     if (file.is_open())
     {
@@ -92,6 +93,10 @@ void read_instance(std::vector<std::vector<float>> &dist_nodes_nodes, std::vecto
                     {
                         DEPOTS = get_number(value);
                         // std::cout << "DEPOTS: " <<  DEPOTS << std::endl;
+                    }
+                    else if (field == "MAX_NUM_VEHICLES")
+                    {
+                        number_vehicles = get_number(value);
                     }
                     else if (field == "EDGE_WEIGHT_TYPE")
                     {

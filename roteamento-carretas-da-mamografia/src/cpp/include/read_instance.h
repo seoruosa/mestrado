@@ -12,4 +12,4 @@ std::vector<std::vector<float>> dist_matrix(std::vector<std::vector<int>> &node_
 std::vector<std::vector<float>> dist_matrix(std::vector<std::vector<int>> &nodes, std::vector<std::vector<int>> &depots);
 
 void read_instance(std::vector<std::vector<float>> &dist_nodes_nodes, std::vector<std::vector<float>> &dist_depots_nodes,
-                   std::vector<float> &demand, int &capacity, const std::string &name, const std::string &filepath);
+                   std::vector<float> &demand, int &capacity, int &number_vehicles, const std::string &name, const std::string &filepath);
