@@ -7,3 +7,4 @@ gurobi.lic
 **/build/
 **/playground.*
 .vscode/*
+*/mmurp_env/*
