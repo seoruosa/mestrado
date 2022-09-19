@@ -1,6 +1,6 @@
 #include "nsgaii.h"
 #include <iostream>
-#include "playground.h"
+// #include "playground.h"
 #include "permutation.h"
 
 #include <algorithm> //sort

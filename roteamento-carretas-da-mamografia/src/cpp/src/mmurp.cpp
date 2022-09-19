@@ -27,8 +27,8 @@ std::tuple<float, float> splitting_chromossome(std::vector<std::vector<float>> &
 
     // V_j cost of the shortest path from node 0 to node j
     std::vector<float> V(n + 1, std::numeric_limits<float>::max());
-    std::vector<int> P(n + 1, 0);
-    std::vector<int> D(n + 1, 0); // depot of each node
+    std::vector<int> precedent(n + 1, 0);
+    std::vector<int> depot_of_vehicle(n + 1, 0); // depot of each node
     V[0] = 0;
 
     // function that return index of chromossome index
@@ -76,8 +76,8 @@ std::tuple<float, float> splitting_chromossome(std::vector<std::vector<float>> &
                 if (V[i - 1] + cost < V[j])
                 {
                     V[j] = V[i - 1] + cost;
-                    P[j] = i - 1;
-                    D[j] = depot;
+                    precedent[j] = i - 1;
+                    depot_of_vehicle[j] = depot;
                 }
                 j = j + 1;
             }
@@ -93,10 +93,10 @@ std::tuple<float, float> splitting_chromossome(std::vector<std::vector<float>> &
 
     while (i != 0)
     {
-        // trips.push_back({D[j]});
-        trip_depot.push_back(D[j]);
+        // trips.push_back({depot_of_vehicle[j]});
+        trip_depot.push_back(depot_of_vehicle[j]);
         trips.push_back({});
-        i = P[j];
+        i = precedent[j];
         for (int k = i + 1; k <= j; k++)
         {
             trips[trips.size() - 1].push_back(S(k));
