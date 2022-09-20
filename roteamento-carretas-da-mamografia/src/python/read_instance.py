@@ -8,6 +8,7 @@ def MDOVRP(filepath):
     # guarda o objeto do arquivo
     DIST = "DIST"
     EUC_2D = "EUC_2D"
+    N, D, V, Q, q, c, coord_x, coord_y = ([None for a in range(8)])
 
     coord_x = []
     coord_y = []
@@ -35,7 +36,6 @@ def MDOVRP(filepath):
                 edge_weight_type = line.split()[2]
 
             if "NODE_COORD_SECTION" in line:
-                print(f"find: NODE_COORD_SECTION - {line}")
                 if edge_weight_type == EUC_2D:
                     for i in range(n):
                         line = f.readline()
@@ -79,6 +79,8 @@ def MDOVRP(filepath):
 def MMURP(filepath):
     # --- LE AS INSTANCIAS ---
     # guarda o objeto do arquivo
+    N, D, V, Q, max_dist_nodes, q, c, vehicles_depot, coord_x, coord_y = ([None for a in range(10)])
+
     DIST = "DIST"
     EUC_2D = "EUC_2D"
 
@@ -159,8 +161,12 @@ def MMURP(filepath):
     return (N, D, V, Q, max_dist_nodes, q, c, vehicles_depot, coord_x, coord_y)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(prog="READ_INSTANCE")
     parser.add_argument("instance", type=argparse.FileType('r'))
+    
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('--mmurp', action='store_true')
+    group.add_argument('--mdovrp', action='store_true')
 
     args = parser.parse_args()
 
@@ -168,11 +174,23 @@ if __name__ == '__main__':
     filename = os.path.basename(filepath)
     instance_name = os.path.splitext(filename)[0]
     
-    N, D, V, Q, max_dist_nodes, q, c, vehicles_depot, coord_x, coord_y = MMURP(filepath)
+    if args.mmurp:
+        N, D, V, Q, max_dist_nodes, q, c, vehicles_depot, coord_x, coord_y = MMURP(filepath)
+        print('MMURP')
+    elif args.mdovrp:
+        N, D, V, Q, q, c, coord_x, coord_y = MDOVRP(filepath)
+        print('MDOVRP')
+    else:
+        pass
+
+    # print(args)
 
     print(f"Instancia: {instance_name}")
     print(f"Demanda Total: {sum(q)}")
     print(f"Capacidade veículo: {Q}")
     print(f"Demanda/Capacidade(numero minimo de carros para atender 100% da demanda) : {ceil(sum(q)/Q)}")
-    print(f"Veiculos por deposito: {', '.join((str(a) for a in vehicles_depot))}")
+    
+    if args.mmurp:
+        print(f"Veiculos por deposito: {', '.join((str(a) for a in vehicles_depot))}")
+    
     print('*'*80)
