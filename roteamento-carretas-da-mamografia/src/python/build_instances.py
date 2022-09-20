@@ -55,8 +55,8 @@ if __name__ == '__main__':
         a MMURP instance for each one and save on destination folder.")
     parser.add_argument("instanceDirPath", type=dir_path,
                         help="Folder of original instances.")
-    parser.add_argument("outDirPath", type=dir_path,
-                        help="Destination of new instances.")
+    parser.add_argument("outDirPath", type=str,
+                        help="Destination of new instances. It's created if it doesn't exist")
     parser.add_argument("-p", "--perc", type=int, help="Percentage of total vehicles that will be \
         used on the new instance.")
     parser.add_argument("-m", "--maxDist", type=int, default=100, help="Given the maximum distance \
@@ -69,6 +69,9 @@ if __name__ == '__main__':
     out_folderpath = args.outDirPath
     perc = args.perc
     maxDist = args.maxDist
+
+    if not os.path.exists(out_folderpath):
+        os.makedirs(out_folderpath)
 
     for filename in os.listdir(folderpath):
         filepath = os.path.join(folderpath, filename)
