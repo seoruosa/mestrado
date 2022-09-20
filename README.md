@@ -51,12 +51,38 @@ _Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a li
 
 --- 
 
+### Rodando análises localmente
+
+### Instalação
+```
+    source setup.sh
+```
+
+### Ativação/Atualização
+```
+    # activate the virtual environment
+    source mmurp_env/bin/activate
+
+    # install packages you will need
+    pip3 install -r setup/requirements.txt
+
+    # save any installed package that will be necessary
+    pip3 freeze > requirements.txt
+```
+
+### Criando instâncias
+```
+    python3 src/python/build_instances.py Instancias/test/ Instancias/out_test/ -p 100 -m 100
+```
+
+
+
 ## To Do
 * Mudar função python de leitura de instância para devolver um objeto instância (criar classe para tal...)
 * ~~Comandos para acessar bash do docker~~
 * ~~Compilando código C++ no docker~~
 * Adicionar passo a passo para rodar todas as funções (adicionar documentação de cada uma)
-* Criar função para adaptar instancias para o problema MOMMURP a partir das instancias do Cordeau(Vrp-Set-A) (são do artigo dele ???)
+* ~~Criar função para adaptar instancias para o problema MOMMURP a partir das instancias do Cordeau(Vrp-Set-A) (são do artigo dele ???)~~
 * Validar que demandas das cidades podem ser atendidas por um único caminhão
 * Configurar vscode para buildar/compilar cpp
     * Passo a passo para debugar
@@ -86,7 +112,7 @@ _Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a li
 * vale limpar cidades com demanda zero???
 * Vale instalar mip com pypy???
 
-# Função python para leitura de instância
+### Função python para leitura de instância
 * Ler problemas variados
     * MMURP
     * MDOVRP
@@ -94,19 +120,6 @@ _Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a li
 * Criar alguns testes para validar desenvolvimento
 
 
-### NSGA-II (Need to implement)
-#### Could be reused
-* ~~crowding distance~~
-* ~~fast non dominated sort~~
-* ~~binary tournament selection~~
-    * ~~select pairs of individuals~~
-    * ~~compare individuals~~
 
-#### Dependent of problem (implemented a real coded version)
-* Chromossome
-* Recombination
-* Mutation
-* initialize_population
-
-#### C++ books
+## C++ books
 * Meyers, Scott - Effective C++ 55 Specific Ways to Improve Your Programs and Designs-Pearson Education Limited (US titles)_Addison Wesley Professional (2005)
