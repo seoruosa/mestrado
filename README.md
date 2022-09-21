@@ -75,7 +75,16 @@ _Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a li
     python3 src/python/build_instances.py Instancias/test/ Instancias/out_test/ -p 100 -m 100
 ```
 
+### Rodando modelo para instância
+```
+    src/python/run_mmurp_model.py Instancias/Vrp-Set-A_MMURP/A-n50-m4-Q80-v8-s100-d2_2_2_2.vrp > out.log
+```
+#### TODO
+* add folder on the input argument to make possible to select the output files
+* add parameters to control the models creation
+* create script to make possible run multiple instances
 
+---
 
 ## To Do
 * Mudar função python de leitura de instância para devolver um objeto instância (criar classe para tal...)
