@@ -14,7 +14,8 @@ services:
     volumes:
         - ./notebooks:/opt/notebooks
         - .:/opt/project
-        - ./src:/opt/notebooks/src
+        - ./src/python:/opt/notebooks/src
+        - ./src:/opt/src
         - ./Instancias:/opt/notebooks/Instancias
         - ./gurobi.lic:/opt/gurobi/gurobi.lic
     tty:

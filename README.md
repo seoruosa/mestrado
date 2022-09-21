@@ -47,7 +47,7 @@ Rodando um arquivo `.py` com um teste simples usando o MIP no bash
 python3 modelo_teste.py
 ```
 
-_Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a licença de uso._
+_Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a licença de uso. Esta licença pode ser conseguida acessando o seguinte [endereço](https://license.gurobi.com/manager/licenses)_
 
 --- 
 
