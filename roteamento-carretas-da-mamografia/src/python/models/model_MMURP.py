@@ -129,8 +129,10 @@ class MMURPmodel:
         return sum((self.__q[j] if self.w[j].xi(k)>0.98 else 0) for j in self.__N)
     
     def pareto_front(self, steps=30, max_seconds=60, runs_by_step=5) -> Tuple[Set, List]:
-        solutions_obj = set()
+        solutions_obj_set = set()
         solutions_x = []
+        solutions_obj = []
+        solutions_gap = []
 
         x_to_integer_map = lambda k: {(i, j):(1 if self.x[i][j].xi(k)>0.98 else 0) \
             for i in self.__V for j in self.__V if i != j}
@@ -152,17 +154,22 @@ class MMURPmodel:
                     for k in range(num_solutions):
                         obj_calc = (self.dist(k), self.demand(k))
                         
-                        if obj_calc not in solutions_obj:
-                            solutions_obj.add(obj_calc)
+                        if obj_calc not in solutions_obj_set:
+                            solutions_obj_set.add(obj_calc)
                             x_new_sol = x_to_integer_map(k)
                             
                             solutions_x.append(x_new_sol)
+                            solutions_obj.append(obj_calc)
+                            solutions_gap.append(self.model.gap)
                             # print(x_new_sol)
                         
                             
                 if status == OptimizationStatus.OPTIMAL:
                     break
                 
-                print(f"number of solutions: {len(solutions_obj)}")
+                print(f"number of solutions: {len(solutions_obj_set)}")
 
-        return (solutions_obj, solutions_x)
+        list_map_obj = [{'dist':el[0], 'demand':el[1], 'gap':solutions_gap[k]} for k, el in enumerate(solutions_obj)]
+
+
+        return (list_map_obj, solutions_x)

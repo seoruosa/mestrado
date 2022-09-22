@@ -10,9 +10,7 @@ if len(sys.argv) > 1:
 
     a = MMURPmodel(filepath=filepath, threads=4)
     
-    solutions_obj, solutions_x = a.pareto_front(30, 30, 2)
-    
-    list_map_obj = [{'dist':el[0], 'demand':el[1]} for el in solutions_obj]
+    list_map_obj, solutions_x = a.pareto_front(30, 30, 2)
 
     filename = os.path.basename(filepath)
     instance_name = os.path.splitext(filename)[0]
