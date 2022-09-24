@@ -132,7 +132,7 @@ class MMURPmodel:
         solutions_obj_set = set()
         solutions_x = []
         solutions_obj = []
-        solutions_gap = []
+        solutions_info = []
 
         x_to_integer_map = lambda k: {(i, j):(1 if self.x[i][j].xi(k)>0.98 else 0) \
             for i in self.__V for j in self.__V if i != j}
@@ -160,7 +160,7 @@ class MMURPmodel:
                             
                             solutions_x.append(x_new_sol)
                             solutions_obj.append(obj_calc)
-                            solutions_gap.append(self.model.gap)
+                            solutions_info.append({'gap': self.model.gap, 'status': f"{status}"})
                             # print(x_new_sol)
                         
                             
@@ -169,7 +169,7 @@ class MMURPmodel:
                 
                 print(f"number of solutions: {len(solutions_obj_set)}")
 
-        list_map_obj = [{'dist':el[0], 'demand':el[1], 'gap':solutions_gap[k]} for k, el in enumerate(solutions_obj)]
+        list_map_obj = [{'dist':el[0], 'demand':el[1], **solutions_info[k]} for k, el in enumerate(solutions_obj)]
 
 
         return (list_map_obj, solutions_x)
