@@ -1,8 +1,6 @@
 #!/bin/bash
 
-"""
-A partir das instancias do problema MDOVRP cria instâncias do problema MMURP
-"""
+# A partir das instancias do problema MDOVRP cria instâncias do problema MMURP
 
 FOLDER_TEMP=Instancias/Vrp-Set-A_temp
 FOLDER_VRP=Instancias/Vrp-Set-A
