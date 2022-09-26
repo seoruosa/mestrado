@@ -28,7 +28,7 @@ class MMURPmodel:
         # Variaveis de decisao
         self.x = [[self.model.add_var(var_type=BINARY) if i!=j else self.model.add_var(lb=0, ub=0) for i in V] for j in V]
         self.u = [[self.model.add_var(var_type=CONTINUOUS) if i!=j else self.model.add_var(lb=0, ub=0) for i in V] for j in V]
-        self.y = [self.model.add_var(var_type=BINARY) for i in N]
+        # self.y = [self.model.add_var(var_type=BINARY) for i in N]
         self.w = [self.model.add_var(var_type=BINARY) for i in N]
     
     def update_obj(self, alfa:float) -> None:
@@ -98,24 +98,24 @@ class MMURPmodel:
             for j in self.__N:
                 self.model += self.__Q * self.x[k][j] >= self.u[k][j]
 
-        # # Restricao 13
-        # menor distancia de algum deposito ate a cidade
-        d = [min([self.__c[j, i] for j in self.__D]) for i in self.__N]
-        # menor distancia entre cidade i e quaisquer outra cidade
-        r = [min([self.__c[j, i] for j in self.__N if i != j]) for i in self.__N]
-        # máxima menor distancia entre duas cidades
-        M = max(r)
+        # # # Restricao 13
+        # # menor distancia de algum deposito ate a cidade
+        # d = [min([self.__c[j, i] for j in self.__D]) for i in self.__N]
+        # # menor distancia entre cidade i e quaisquer outra cidade
+        # r = [min([self.__c[j, i] for j in self.__N if i != j]) for i in self.__N]
+        # # máxima menor distancia entre duas cidades
+        # M = max(r)
 
-        # d[i] >= r[i] <=> é mais longe ir de algum depósito do q de outra cidade => y in {0, 1}
-        # d[i] < r[i] <=> é mais perto sair de algum depósito do q de qualquer outra cidade => y = 1
-        for i in self.__N:
-            self.model += d[i] + M * self.y[i] >= r[i]*self.w[i]
+        # # d[i] >= r[i] <=> é mais longe ir de algum depósito do q de outra cidade => y in {0, 1}
+        # # d[i] < r[i] <=> é mais perto sair de algum depósito do q de qualquer outra cidade => y = 1
+        # for i in self.__N:
+        #     self.model += d[i] + M * self.y[i] >= r[i]*self.w[i]
 
-        # Restricao 14
+        # # Restricao 14
 
-        for i in self.__N:
-            k_l = self.__D[argmin([self.__c[j, i] for j in self.__D], axis=0)]
-            self.model += self.x[k_l][i] >= self.y[i]
+        # for i in self.__N:
+        #     k_l = self.__D[argmin([self.__c[j, i] for j in self.__D], axis=0)]
+        #     self.model += self.x[k_l][i] >= self.y[i]
     
     # def bool_var_value(self, x : Var, k : int) -> int:
     #     return (1 if x.xi(k) > 0.98 else 0)
