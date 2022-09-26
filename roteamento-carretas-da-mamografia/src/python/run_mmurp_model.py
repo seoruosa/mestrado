@@ -55,7 +55,7 @@ if __name__ == '__main__':
             tic = perf_counter_ns()
             
             # sim_time(10)
-            a = MMURPmodel(filepath=filepath, threads=threads)
+            a = MMURPmodel(filepath=filepath.name, threads=threads)
             toc = perf_counter_ns()
             log(f"build_model: {(toc - tic)/1e9} secs")
 
