@@ -29,7 +29,8 @@ DistType dist_type(std::string &edge_weight_type)
 }
 
 void read_instance(std::vector<std::vector<float>> &dist_nodes_nodes, std::vector<std::vector<float>> &dist_depots_nodes,
-                   std::vector<float> &demand, int &capacity, int &number_vehicles, const std::string &name, const std::string &filepath)
+                   std::vector<float> &demand, int &capacity, std::vector<int> &number_vehicles, float &max_travel_dist,
+                   const std::string &name, const std::string &filepath)
 
 {
     std::ifstream file(filepath);
@@ -62,7 +63,6 @@ void read_instance(std::vector<std::vector<float>> &dist_nodes_nodes, std::vecto
 
         return output;
     };
-    number_vehicles = std::numeric_limits<int>::max();
 
     if (file.is_open())
     {
@@ -94,9 +94,9 @@ void read_instance(std::vector<std::vector<float>> &dist_nodes_nodes, std::vecto
                         DEPOTS = get_number(value);
                         // std::cout << "DEPOTS: " <<  DEPOTS << std::endl;
                     }
-                    else if (field == "MAX_NUM_VEHICLES")
+                    else if (field == "MAX_TRAVEL_DIST")
                     {
-                        number_vehicles = get_number(value);
+                        max_travel_dist = get_number(value);
                     }
                     else if (field == "EDGE_WEIGHT_TYPE")
                     {
@@ -143,6 +143,15 @@ void read_instance(std::vector<std::vector<float>> &dist_nodes_nodes, std::vecto
                     else if (mode == DistType::EUC_2D)
                     {
                         depots_coord = get_int_matrix(file, DEPOTS, 2, 1);
+                    }
+                }
+                else if (section_name == "DEPOT_VEHICLES_SECTION")
+                {
+                    auto a = get_int_matrix(file, DEPOTS, 1, 0);
+
+                    for (auto &el : a)
+                    {
+                        number_vehicles.push_back(el[0]);
                     }
                 }
             }

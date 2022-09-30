@@ -7,13 +7,24 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O3 -march=native -fconcepts")
 
 # set the project name
-project(TESTAAAAANDO)
+project(MMURP)
 
 include_directories(include)
 
 
 # add library
-add_library(mylib src/read_instance.cpp src/permutation.cpp src/util_print.cpp src/random_generation.cpp src/util_vrp.cpp src/mmurp.cpp src/seeds.cpp)
+add_library(mylib 
+            src/read_instance.cpp 
+            src/permutation.cpp 
+            src/util_print.cpp 
+            src/random_generation.cpp 
+            src/util_vrp.cpp 
+            src/mmurp.cpp 
+            src/seeds.cpp
+            src/mommurp.cpp
+            src/label.cpp
+            src/nsgaii_mmurp.cpp
+            )
 
 # add the executable
 # add_executable(read_instance src/testing.cpp)
