@@ -65,6 +65,7 @@ _Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a li
 
     # parando o container(sem excluí-lo)
     sudo docker-compose -f docker-compose_optimizer-python-mip.yml stop
+    sudo docker gurobi-python-mip stop
 
     # abrindo um console
     docker exec -it gurobi-python-mip /bin/bash
