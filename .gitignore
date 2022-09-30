@@ -8,3 +8,8 @@ gurobi.lic
 **/playground.*
 .vscode/*
 */mmurp_env/*
+*.out
+*.in
+*/Instancias/*_MMURP
+*/resultados/exp_*/
+*/resultados/exp_*.tar.gz
