@@ -13,3 +13,4 @@ gurobi.lic
 */Instancias/*_MMURP
 */resultados/exp_*/
 */resultados/exp_*.tar.gz
+*.result
