@@ -14,3 +14,4 @@ gurobi.lic
 */resultados/exp_*/
 */resultados/exp_*.tar.gz
 *.result
+*/tuning/instances/*

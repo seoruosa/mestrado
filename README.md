@@ -122,3 +122,6 @@ _Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a li
 
 ## C++ books
 * Meyers, Scott - Effective C++ 55 Specific Ways to Improve Your Programs and Designs-Pearson Education Limited (US titles)_Addison Wesley Professional (2005)
+
+## Referências
+* https://github.com/seoruosa/exp-det-parametros/tree/develop
