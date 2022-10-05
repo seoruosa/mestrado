@@ -46,7 +46,7 @@ fi
 # Otherwise, save the output to a file, and parse the result from it.
 # (If you wish to ignore segmentation faults you can use '{}' around
 # the command.)
-$EXE $INSTANCE ${FIXED_PARAMS} ${CONFIG_PARAMS} | python3 ../src/python/calculate_hypervol.py 1> ${STDOUT} 2> ${STDERR}
+$EXE $INSTANCE ${FIXED_PARAMS} ${CONFIG_PARAMS} | ../mmurp_env/bin/python3 ../src/python/calculate_hypervol.py 1> ${STDOUT} 2> ${STDERR}
 
 # # This may be used to introduce a delay if there are filesystem
 # # issues.
