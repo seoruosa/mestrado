@@ -22,6 +22,8 @@
 #include <sstream>
 #include <algorithm>
 
+#include <filesystem>
+
 int main(const int argc, const char *argv[])
 {
     NSGAII_MMURP_Params CONFIG = read_input(argc, argv);
@@ -33,11 +35,10 @@ int main(const int argc, const char *argv[])
     std::vector<float> demand;
     std::vector<int> max_number_vehicles;
     float max_travel_dist;
-    std::string name;
+    std::string name = std::filesystem::path(CONFIG.instance_path).stem().string();
 
     read_instance(dist_nodes_mat, dist_depots_nodes_mat, demand, CAPACITY, max_number_vehicles, max_travel_dist, 
                  name, CONFIG.instance_path);
-    name = instance_name("A", dist_nodes_mat.size(), dist_depots_nodes_mat.size(), CAPACITY, max_number_vehicles);
 
     auto REF_POINT = ref_point(dist_nodes_mat, dist_depots_nodes_mat);
 
