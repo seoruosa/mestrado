@@ -26,11 +26,14 @@ add_library(mylib
             src/nsgaii_mmurp.cpp
             )
 
-# add_executable(playground src/playground.cpp)
-# target_link_libraries(playground PUBLIC mylib)
+add_executable(playground src/playground.cpp)
+target_link_libraries(playground PUBLIC mylib)
 
-add_executable(NSGAII_MMURP src/nsgaii_mmurp.cpp)
-target_link_libraries(NSGAII_MMURP PUBLIC mylib)
+add_executable(mmurp_post_process src/playground.cpp)
+target_link_libraries(mmurp_post_process PUBLIC mylib)
+
+# add_executable(NSGAII_MMURP src/nsgaii_mmurp.cpp)
+# target_link_libraries(NSGAII_MMURP PUBLIC mylib)
 
 # add_executable(NSGAII_REAL src/nsgaii_real.cpp)
 # target_link_libraries(NSGAII_REAL PUBLIC mylib)

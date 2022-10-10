@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <fstream>
+#include <string>
 
 std::vector<std::vector<int>> get_int_matrix(std::ifstream &file, int lines, int columns, int skip_columns);
 std::vector<std::vector<float>> get_float_matrix(std::ifstream &file, int lines, int columns, int skip_columns);
@@ -19,3 +20,6 @@ void read_instance(std::vector<std::vector<float>> &dist_nodes_nodes,
                    float &max_travel_dist,
                    const std::string &name, 
                    const std::string &filepath);
+
+std::vector<std::vector<int>> le_solucao(std::string filepath);
+std::vector<std::vector<float>> all_solutions_pos_proc(std::string solution_path, std::string instance_path);

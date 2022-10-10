@@ -3,14 +3,20 @@
 #include <regex>
 #include <cmath>
 #include "read_instance.h"
+#include "mommurp.h"
 
-
-enum DistType {EUC_2D = 0, DIST = 1, NOT_FOUND = -1};
+enum DistType
+{
+    EUC_2D = 0,
+    DIST = 1,
+    NOT_FOUND = -1
+};
 DistType dist_type(std::string &edge_weight_type)
 {
     DistType mode;
 
-    auto exist_on_type = [edge_weight_type](const auto word){return (edge_weight_type.find(word) != std::string::npos);};
+    auto exist_on_type = [edge_weight_type](const auto word)
+    { return (edge_weight_type.find(word) != std::string::npos); };
 
     if (exist_on_type("DIST"))
     {
@@ -24,8 +30,8 @@ DistType dist_type(std::string &edge_weight_type)
     {
         mode = DistType::NOT_FOUND;
     }
-    
-    return mode;    
+
+    return mode;
 }
 
 void read_instance(std::vector<std::vector<float>> &dist_nodes_nodes, std::vector<std::vector<float>> &dist_depots_nodes,
@@ -126,7 +132,7 @@ void read_instance(std::vector<std::vector<float>> &dist_nodes_nodes, std::vecto
                 else if (section_name == "DEMAND_SECTION")
                 {
                     auto a = get_float_matrix(file, NODES, 1, 1);
-                    
+
                     for (auto &el : a)
                     {
                         demand.push_back(el[0]);
@@ -162,12 +168,117 @@ void read_instance(std::vector<std::vector<float>> &dist_nodes_nodes, std::vecto
             dist_nodes_nodes = dist_matrix(nodes_coord);
             dist_depots_nodes = dist_matrix(nodes_coord, depots_coord);
         }
-        
     }
     else
     {
         std::cout << "FILE IS NOT OPEN" << std::endl;
     }
+}
+
+std::vector<std::vector<int>> le_solucao(std::string filepath)
+{
+    std::smatch match;
+    std::ifstream file(filepath);
+    std::string string_line;
+    std::regex two_points_reg("[\\s\\t]*:[\\s\\t]*");
+    std::regex x_reg("x_\\d+");
+
+    std::vector<std::vector<int>> mat;
+
+    auto get_number = [&](std::string a)
+    {
+        std::regex number_reg("\\d+");
+        std::smatch n_match;
+        float output(INT16_MAX);
+
+        if (std::regex_search(a, n_match, number_reg))
+        {
+            output = std::stoi(n_match[0].str());
+        }
+
+        return output;
+    };
+
+    if (file.is_open())
+    {
+        bool achouTamanho = false;
+        int tamanho_populacao = 0;
+
+        while (file.good())
+        {
+            std::getline(file, string_line);
+            if (achouTamanho)
+            {
+                auto words_begin = std::sregex_iterator(string_line.begin(), string_line.end(), x_reg);
+                auto words_end = std::sregex_iterator();
+
+                int n_cidades = 0;
+                for (auto ind = words_begin; ind != words_end; ++ind)
+                {
+                    ++n_cidades;
+                }
+                achouTamanho = false;
+
+                mat = get_int_matrix(file, tamanho_populacao, n_cidades, 0);
+            }
+
+            if (std::regex_search(string_line, match, two_points_reg))
+            {
+                auto field = match.prefix().str();
+                auto value = match.suffix().str();
+
+                if (field == "DURACAO")
+                {
+                    achouTamanho = true;
+                }
+                else if (field == "POPULATION SIZE")
+                {
+                    tamanho_populacao = get_number(value);
+                }
+            }
+        }
+    }
+
+    return mat;
+}
+
+std::vector<std::vector<float>> all_solutions_pos_proc(std::string solution_path, std::string instance_path)
+{
+    // Read instance
+    int CAPACITY; // TODO should be float
+    std::vector<std::vector<float>> dist_nodes_mat;
+    std::vector<std::vector<float>> dist_depots_nodes_mat;
+    std::vector<float> demand;
+    std::vector<int> max_number_vehicles;
+    float max_travel_dist;
+    std::string name = "";
+
+    read_instance(dist_nodes_mat, dist_depots_nodes_mat, demand, CAPACITY, max_number_vehicles, max_travel_dist,
+                  name, instance_path);
+
+    std::vector<std::vector<float>> all_solutions;
+
+    auto solucoes = le_solucao(solution_path);
+    for (auto &sol : solucoes)
+    {
+        SplittedResult splitting_result = splitting(dist_nodes_mat, dist_depots_nodes_mat, sol,
+                                                    demand, max_number_vehicles, CAPACITY, max_travel_dist);
+
+        auto result = splitting_result.lambda;
+
+        for (auto row = result.rbegin(); row != result.rend(); row++)
+        {
+            if (!(*row).empty())
+            {
+                for (auto &el : *row)
+                {
+                    all_solutions.push_back({el.distance(), el.demand()});
+                }
+            }
+        }
+    }
+
+    return all_solutions;
 }
 
 std::vector<std::vector<int>> get_int_matrix(std::ifstream &file, int lines, int columns, int skip_columns)
