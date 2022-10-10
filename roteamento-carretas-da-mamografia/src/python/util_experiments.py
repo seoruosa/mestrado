@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 import os
 import glob
@@ -59,6 +60,25 @@ def read_out_file(filepath):
         
     return (df, param_map)
 
+def read_pos_processed_csv(filepath):
+    """
+        Read a csv file with all objectives values found (after a post processing), 
+        given the big tour solutions, clean the dominated solutions and returns a 
+        pandas.DataFrame
+        Usage:
+            nsga_pp_path = "../project/resultados/exp_20221005/n50/A-n50-m4-Q160-v4-s100-d1_1_1_1-20221005194618.csv"
+            df_nd = read_pos_processed_csv(nsga_pp_path)
+    """
+    COLUMNS = ['dist', 'demand']
+    
+    df = pd.read_csv(filepath)
+    df.columns = COLUMNS
+
+    pop = np.array(list(set([(v[0], v[1]) for v in df.values])))
+    non_dom, _ = mo.no_dominated(pop*[1, -1])
+
+    return pd.DataFrame(pop[non_dom], columns=COLUMNS)
+
 def conv_to_number(value):
     """
         Convert to number when it's possible, if it's not return the value
@@ -94,6 +114,16 @@ def nsga_output_to_df(folderpath):
 
             params = {**params, 'hv':hv, 'non_dominated': len(non_dominated)}
 
+            csv_path = filepath.replace('.out', '.csv')
+            if os.path.isfile(csv_path):
+                df_pp = read_pos_processed_csv(csv_path)
+                
+                pop_pp = df_pp[['dist', 'demand']].values * [1, -1]        
+                hv_pp = mo.hypervolume(pop_pp, ref_point)
+                non_dominated_pp, _ = mo.no_dominated(pop_pp)
+                
+                params = {**params, 'hv_post_proc': hv_pp , 'non_dominated_post_proc': len(non_dominated_pp)}
+            
             all_results.append(params)
 
     return pd.DataFrame(all_results)
