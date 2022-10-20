@@ -107,7 +107,7 @@ def nsga_output_to_df(folderpath):
         if os.path.isfile(filepath):
             df, params = read_out_file(filepath)
 
-            pop = df[['dist', 'demand']].values * [1, -1]        
+            pop = df[['dist', 'demand']].dropna().values * [1, -1]
             ref_point = [float(a) for a in params['ref_point'].split(',')]
             hv = mo.hypervolume(pop, ref_point)
             non_dominated, _ = mo.no_dominated(pop)

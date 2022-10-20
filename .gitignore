@@ -15,3 +15,7 @@ gurobi.lic
 */resultados/exp_*.tar.gz
 *.result
 */tuning/instances/*
+*.pdf
+*/resultados/*.tar.gz
+*/resultados/*/*
+*/notebooks/*.csv

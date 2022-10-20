@@ -123,6 +123,11 @@ _Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a li
     src/python/run_mmurp_model.py Instancias/Vrp-Set-A_MMURP/A-n50-m4-Q80-v8-s100-d2_2_2_2.vrp > out.log
 ```
 
+#### Rodando pós processamento
+```
+    ./src/python/run_pos_process.py resultados/exp_20221005/n100/ Instancias/Vrp-Set-A_MMURP/test/
+```
+
 ## C++ books
 * Meyers, Scott - Effective C++ 55 Specific Ways to Improve Your Programs and Designs-Pearson Education Limited (US titles)_Addison Wesley Professional (2005)
 
