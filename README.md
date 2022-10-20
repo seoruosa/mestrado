@@ -41,6 +41,8 @@ para rodar:
 ```
 ./NSGAII_MMURP ../../../Instancias/old_testing_instances/Vrp-Set-A_25p/A-n249-m3-Q500-v7.vrp --maxDistNodes 200 --maxNumVehicles 10 --sizePop 50 --numGen 50 --mutationRate 0.1
 
+# pós-processamento para gerar as soluções que não atendam o máximo possível
+./build/mmurp_post_process ../../resultados/exp_20221005/n50/A-n50-m4-Q80-v4-s100-d1_1_1_1-20221005194354.out  ../../Instancias/Vrp-Set-A_MMURP/test/A-n50-m4-Q80-v4-s100-d1_1_1_1.vrp > A-n50-m4-Q80-v4-s100-d1_1_1_1-20221005194354.csv
 ```
 
 Rodando um arquivo `.py` com um teste simples usando o MIP no bash
@@ -87,6 +89,7 @@ _Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a li
 
     # run the experiment
     nohup ./run_tests.sh &>resultados/bash_test.log &
+    nohup ./src/python/run_experiments.py Instancias/Vrp-Set-A_MMURP/test/ -n 10 > experiments.cout 2> experiments.cerr &
 ```
 #### Refs
 * differences between stop/down ([link](https://stackoverflow.com/questions/55282552/difference-between-docker-compose-down-and-ctrl-c))
@@ -120,5 +123,13 @@ _Para utilizar o gurobi é necessário adicionar o arquivo `gurobi.lic` com a li
     src/python/run_mmurp_model.py Instancias/Vrp-Set-A_MMURP/A-n50-m4-Q80-v8-s100-d2_2_2_2.vrp > out.log
 ```
 
+#### Rodando pós processamento
+```
+    ./src/python/run_pos_process.py resultados/exp_20221005/n100/ Instancias/Vrp-Set-A_MMURP/test/
+```
+
 ## C++ books
 * Meyers, Scott - Effective C++ 55 Specific Ways to Improve Your Programs and Designs-Pearson Education Limited (US titles)_Addison Wesley Professional (2005)
+
+## Referências
+* https://github.com/seoruosa/exp-det-parametros/tree/develop

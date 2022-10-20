@@ -22,6 +22,8 @@
 #include <sstream>
 #include <algorithm>
 
+#include <filesystem>
+
 int main(const int argc, const char *argv[])
 {
     NSGAII_MMURP_Params CONFIG = read_input(argc, argv);
@@ -33,11 +35,10 @@ int main(const int argc, const char *argv[])
     std::vector<float> demand;
     std::vector<int> max_number_vehicles;
     float max_travel_dist;
-    std::string name;
+    std::string name = std::filesystem::path(CONFIG.instance_path).stem().string();
 
     read_instance(dist_nodes_mat, dist_depots_nodes_mat, demand, CAPACITY, max_number_vehicles, max_travel_dist, 
                  name, CONFIG.instance_path);
-    name = instance_name("A", dist_nodes_mat.size(), dist_depots_nodes_mat.size(), CAPACITY, max_number_vehicles);
 
     auto REF_POINT = ref_point(dist_nodes_mat, dist_depots_nodes_mat);
 
@@ -86,10 +87,10 @@ int main(const int argc, const char *argv[])
 
     int number_of_obj = 2;
 
-    auto [pop, pop_obj_val] = NSGAII_mod(CONFIG.size_pop, CONFIG.number_generations, demand.size(), calc, number_of_obj,
+    auto [pop, pop_obj_val] = NSGAII_mod(CONFIG.size_pop, CONFIG.number_generations * demand.size(), demand.size(), calc, number_of_obj,
                                          CONFIG.mutation_rate, initialize_population, BEGIN_OUT_FILE, END_OUT_FILE);
 
-    print_solution_csv(pop, pop_obj_val);
+    // print_solution_csv(pop, pop_obj_val);
 
     std::cout << REF_POINT << std::endl;
     print_obj_val(pop_obj_val);
@@ -193,7 +194,7 @@ std::tuple<std::vector<Individual>, std::vector<std::vector<float>>> NSGAII_mod(
         
         std::chrono::duration<double, std::milli> duration(end_gen - start_gen);
 
-        std::cout << "Gen : " << generation << ", duracao: " << duration.count() << std::endl;
+        // std::cout << "Gen : " << generation << ", duracao: " << duration.count() << std::endl;
 
     }
 
@@ -411,7 +412,7 @@ std::string ref_point(std::vector<std::vector<float>> &dist_nodes_mat, std::vect
 {
     std::ostringstream name;
 
-    float max_travel_dist = 1.1 * max_dist(dist_nodes_mat, dist_depots_nodes_mat) * dist_depots_nodes_mat.size();
+    float max_travel_dist = 1.1 * max_dist(dist_nodes_mat, dist_depots_nodes_mat) * dist_nodes_mat.size();
 
     name << "REF_POINT: " << max_travel_dist << ", " << 0;
 
