@@ -17,13 +17,16 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
+add_library(testlib util.cpp)
+
 add_library(GTest::GTest INTERFACE IMPORTED)
 target_link_libraries(GTest::GTest INTERFACE gtest_main)
 
-add_executable(${PROJECT_NAME} label_test.cc)
+add_executable(${PROJECT_NAME} label_test.cc splitting_test.cc)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
   GTest::GTest
-  splitLib)
+  splitLib
+  testlib)
 
 add_test(splitting_gtests ${PROJECT_NAME})
