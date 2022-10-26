@@ -20,3 +20,4 @@ gurobi.lic
 */resultados/*/*
 */notebooks/*.csv
 **/playground
+**/play_instance
