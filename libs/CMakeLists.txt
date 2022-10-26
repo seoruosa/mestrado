@@ -5,12 +5,23 @@ project(libs)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O3 -march=native -fconcepts")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O3 -march=native -fconcepts")
 
 add_executable(
     playground
     splitting/playground.cpp
 )
+
+add_executable(
+    NSGAII_MMURP 
+    nsga_mmurp/nsgaii_mmurp.cpp
+    )
+
+target_link_libraries(
+    NSGAII_MMURP PUBLIC 
+    NSGA_MMURPlib 
+    splitLib
+    )
 
 add_custom_command(TARGET playground 
                    POST_BUILD
@@ -27,3 +38,4 @@ target_link_libraries(
 
 add_subdirectory(read_instance)
 add_subdirectory(splitting)
+add_subdirectory(nsga_mmurp)
