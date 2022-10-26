@@ -20,10 +20,13 @@
     * operador de mutação
     * gerador de solução inicial
     * fazer o algoritmo principal ser indiferente à representação
+    * não precisa recriar o vetor de próxima geração toda vez (sobrescrever a existente)
+    * funções devem depender de uma única semente para os geradores de número aleatório
 
 
 * Dividir em subprojetos
     * splitting
+    * ler instancia
     * heuristicas
     * metaheuristicas
         * NSGAII
