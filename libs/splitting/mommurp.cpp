@@ -22,12 +22,7 @@ SplittedResult splitting(const std::vector<std::vector<float>> &dist_nodes_deman
     Lambda lambda(n + 1, std::list<Label>({}));
     MapPred map_label_pred;
 
-    lambda[0].push_back(Label(number_depots));
-    for (int i = 1; i < lambda.size(); i++)
-    {
-        lambda.reserve((int)(n/10));
-    }
-    
+    lambda[0].push_back(Label(number_depots));    
 
     // function that return index of big tour index i
     auto T = [big_tour](int i)
