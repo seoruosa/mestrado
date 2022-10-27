@@ -19,3 +19,6 @@ gurobi.lic
 */resultados/*.tar.gz
 */resultados/*/*
 */notebooks/*.csv
+**/playground
+**/play_instance
+NSGAII_MMURP
