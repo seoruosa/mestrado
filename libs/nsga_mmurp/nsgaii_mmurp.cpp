@@ -1,28 +1,18 @@
 #include <iostream>
+#include <sstream>
+#include <algorithm> //sort
+#include <limits>    //numeric_limits
+#include <filesystem>
 
 #include "nsgaii.cpp"
 #include "nsgaii_mmurp.h"
-
 #include "../splitting/mommurp.h"
-// #include "playground.h"
-#include "permutation.cpp"
+#include "permutation.h"
 
-#include <algorithm> //sort
-#include <limits>    //numeric_limits
-
-// #include "random_generation.h"
 #include "util_print.h"
-
-#include "read_instance.h"
-#include "util_print.cpp"
-
-// #include "seeds.h" // RND_ENGINE
-#include "mmurp.h"
 #include "util_vrp.h"
-#include <sstream>
-#include <algorithm>
 
-#include <filesystem>
+#include "../read_instance/mmurp.h"
 
 int main(const int argc, const char *argv[])
 {
@@ -50,31 +40,6 @@ int main(const int argc, const char *argv[])
     print_params(CONFIG, CAPACITY, name, END_OUT_FILE);
     END_OUT_FILE << REF_POINT << std::endl;
 
-    // DONE
-    // ~~gerar instancias a partir das instancias da literatura~~
-    //      colocar maxDistNodes dentro da instancia -> não precisa
-    //      ~~colocar maxNumVehicles dentro da instancia~~
-
-    // ~~printar solução inicial em arquivo~~
-    // ~~printar ultima solução em arquivo~~
-
-    //      ~~calcular ponto de referencia da instancia~~
-    //      ~~calcular hipervolume~~
-
-    // FAZER
-
-    // criar programa que roda os experimentos
-
-    // std::cout << "MAX_VEHICLES: " << max_number_vehicles << std::endl;
-
-    // auto calc = [&](Individual x)
-    // {
-    //     auto [demanda_atendida, dist_percorrida] = splitting_chromossome(dist_nodes_mat, dist_depots_nodes_mat, x, demand,
-    //                                                                      CAPACITY, CONFIG.max_dist_between_nodes, max_number_vehicles);
-
-    //     return std::vector<float>({dist_percorrida, -demanda_atendida});
-    // };
-
     auto calc = [&](Individual x)
     {
         SplittedResult splitting_result = splitting(dist_nodes_mat, dist_depots_nodes_mat, x, demand, max_number_vehicles,
@@ -90,8 +55,6 @@ int main(const int argc, const char *argv[])
     auto [pop, pop_obj_val] = NSGAII_mod(CONFIG.size_pop, CONFIG.number_generations * demand.size(), demand.size(), calc, number_of_obj,
                                          CONFIG.mutation_rate, initialize_population, BEGIN_OUT_FILE, END_OUT_FILE);
 
-    // print_solution_csv(pop, pop_obj_val);
-
     std::cout << REF_POINT << std::endl;
     print_obj_val(pop_obj_val);
 
@@ -101,6 +64,8 @@ int main(const int argc, const char *argv[])
 
 std::vector<Individual> initialize_population(int size_pop, int n_cities)
 {
+    unsigned SEED = std::chrono::system_clock::now().time_since_epoch().count();
+    auto RND_ENGINE = std::default_random_engine(SEED);
 
     std::vector<Individual> pop(size_pop, generate_int_values(n_cities));
 
@@ -303,14 +268,6 @@ NSGAII_MMURP_Params read_input(const int &argc, const char *argv[])
         auto arg_name = arguments[i];
         auto arg_value = arguments[i + 1];
 
-        // if (arg_name == "--maxDistNodes")
-        // {
-        //     max_dist_between_nodes = std::stof(arg_value);
-        // }
-        // else if (arg_name == "--maxNumVehicles")
-        // {
-        //     max_number_vehicles = std::stoi(arg_value);
-        // }
         if (arg_name == "--sizePop")
         {
             size_pop = std::stoi(arg_value);

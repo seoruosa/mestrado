@@ -19,9 +19,6 @@ class increment {
         int operator() () { return value++; }
 };
 
-// unsigned SEED = std::chrono::system_clock::now().time_since_epoch().count();
-// auto RND_ENGINE = std::default_random_engine(SEED);
-
 // TODO create a generic version
 // template <class T>
 std::vector<int> generate_int_values(const int first, const int n)
