@@ -1,11 +1,9 @@
-#include "nsgaii.h"
-#include <iostream>
-// #include "playground.h"
-#include "permutation.h"
-
 #include <algorithm> //sort
 #include <limits>    //numeric_limits
+#include <iostream>
 
+#include "nsgaii.h"
+#include "permutation.h"
 #include "random_generation.h"
 #include "util_print.h"
 

@@ -8,10 +8,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_library(NSGA_MMURPlib
             permutation.cpp 
-            util_print.cpp 
             random_generation.cpp 
+            util_print.cpp
             util_vrp.cpp
-            seeds.cpp
             nsgaii_mmurp.cpp
             )
 

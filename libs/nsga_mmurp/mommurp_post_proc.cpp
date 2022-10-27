@@ -1,6 +1,7 @@
 #include <vector>
 #include <string>
-#include "read_instance.h"
+
+#include "../read_instance/mmurp.h"
 
 int main(const int argc, const char *argv[])
 {
