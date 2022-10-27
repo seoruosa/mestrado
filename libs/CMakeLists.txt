@@ -23,11 +23,11 @@ target_link_libraries(
     splitLib
     )
 
-add_custom_command(TARGET playground 
+add_custom_command(TARGET NSGAII_MMURP 
                    POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy 
-                   ${CMAKE_CURRENT_BINARY_DIR}/playground 
-                   ${PROJECT_SOURCE_DIR}/playground)
+                   ${CMAKE_CURRENT_BINARY_DIR}/NSGAII_MMURP 
+                   ${PROJECT_SOURCE_DIR}/NSGAII_MMURP)
 
 
 target_link_libraries(

@@ -21,3 +21,4 @@ gurobi.lic
 */notebooks/*.csv
 **/playground
 **/play_instance
+NSGAII_MMURP
