@@ -21,6 +21,7 @@ target_link_libraries(
     NSGAII_MMURP PUBLIC 
     NSGA_MMURPlib 
     splitLib
+    utilslib
     )
 
 add_custom_command(TARGET NSGAII_MMURP 
@@ -39,3 +40,4 @@ target_link_libraries(
 add_subdirectory(read_instance)
 add_subdirectory(splitting)
 add_subdirectory(nsga_mmurp)
+add_subdirectory(utils)

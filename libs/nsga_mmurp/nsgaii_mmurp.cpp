@@ -13,6 +13,7 @@
 #include "util_vrp.h"
 
 #include "../read_instance/mmurp.h"
+#include "../utils/performance.h"
 
 int main(const int argc, const char *argv[])
 {
@@ -80,7 +81,9 @@ std::vector<Individual> initialize_population(int size_pop, int n_cities)
 std::tuple<std::vector<Individual>, std::vector<std::vector<float>>> NSGAII_mod(int size_pop, int number_generations, int number_cities,
                                                                                 auto f, int number_obj, float mutation_rate, auto initialize_pop_func, std::ostream &BEGIN_FILE, std::ostream &END_FILE)
 {
-    auto start = std::chrono::high_resolution_clock::now();
+    std::ofstream MEASUREMENT_FILE(file_name("measurements", "txt"), std::ios::ate);
+
+    auto start = perf::time::start();
     // initialize population
     // TODO need to create a initialization for MMURP
     // TODO parent_pop will be necessary to change type
@@ -94,39 +97,61 @@ std::tuple<std::vector<Individual>, std::vector<std::vector<float>>> NSGAII_mod(
     // print_mat(parent_pop);
     // std::cout << "*****************************************" << std::endl;
     // print_mat(parent_pop_obj_val);
-
     for (int generation = 0; generation < number_generations; generation++)
     {
-        auto start_gen = std::chrono::high_resolution_clock::now();
+        perf::save_gen(generation, MEASUREMENT_FILE);
+
+        auto start_gen = perf::time::start();
+        auto time_start = perf::time::start();
         // first child generation
         // TODO child_pop need to change the type
         // TODO should be a function input
         std::vector<Individual> child_pop = generate_next_generation(parent_pop_obj_val, parent_pop, mutation_rate);
+        auto time_duration = perf::time::duration(time_start);
+        
+        perf::save_measurement("next_generation:generate", time_duration, MEASUREMENT_FILE);
+
         // print_mat(child_pop);
         // return;
         // std::vector<Individual> child_pop = generate_next_gen(parent_pop_obj_val, parent_pop, mutation_rate);
+        time_start = perf::time::start();
         std::vector<std::vector<float>> child_pop_obj_val(evaluate_pop_obj(child_pop, f, number_obj));
 
         std::vector<Individual> next_gen_pop(child_pop);
         std::vector<std::vector<float>> next_gen_pop_obj_val(child_pop_obj_val);
+        
+        time_duration = perf::time::duration(time_start);
+        perf::save_measurement("next_generation:evaluate", time_duration, MEASUREMENT_FILE);
 
         // TODO make generations an object to be easier to make the transition from one gen to other
         // create the next generation
+        time_start = perf::time::start();
+
         next_gen_pop.insert(next_gen_pop.end(), parent_pop.begin(), parent_pop.end());
         next_gen_pop_obj_val.insert(next_gen_pop_obj_val.end(), parent_pop_obj_val.begin(), parent_pop_obj_val.end());
+        
+        time_duration = perf::time::duration(time_start);
+        perf::save_measurement("next_generation:insert", time_duration, MEASUREMENT_FILE);
 
+        time_start = perf::time::start();
         auto [fronts, rank] = fast_non_dominated_sort(next_gen_pop_obj_val);
+        time_duration = perf::time::duration(time_start);
+        perf::save_measurement("next_generation:fast_sort", time_duration, MEASUREMENT_FILE);
 
         std::vector<std::vector<int>> next_pop;
         std::vector<int> next_pop_idx;
 
+        time_start = perf::time::start();
         int i = 0;
         while ((int)(next_pop_idx.size() + fronts[i].size()) <= size_pop)
         {
             next_pop_idx.insert(next_pop_idx.begin(), fronts[i].begin(), fronts[i].end());
             ++i;
         }
+        time_duration = perf::time::duration(time_start);
+        perf::save_measurement("next_generation:select_except_last", time_duration, MEASUREMENT_FILE);
 
+        time_start = perf::time::start();
         std::vector<float> distances = crowding_distance_assignment(next_gen_pop_obj_val, fronts[i]);
 
         std::vector<int> perm(generate_int_values(fronts[i].size()));
@@ -155,6 +180,9 @@ std::tuple<std::vector<Individual>, std::vector<std::vector<float>>> NSGAII_mod(
             parent_pop[i] = next_gen_pop[idx];
         }
         parent_pop_obj_val = evaluate_pop_obj(parent_pop, f, number_obj);
+        time_duration = perf::time::duration(time_start);
+        perf::save_measurement("next_generation:crowd_sort_and_finish", time_duration, MEASUREMENT_FILE);
+
         auto end_gen = std::chrono::high_resolution_clock::now();
         
         std::chrono::duration<double, std::milli> duration(end_gen - start_gen);
@@ -166,9 +194,14 @@ std::tuple<std::vector<Individual>, std::vector<std::vector<float>>> NSGAII_mod(
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> duration(end - start);
 
+    auto time_duration = perf::time::duration(start);
+    perf::save_measurement("nsga:total", time_duration, MEASUREMENT_FILE);
+
     END_FILE << "DURACAO : " << duration.count() << std::endl;
 
     print_solution_csv(parent_pop, parent_pop_obj_val, END_FILE);
+
+    MEASUREMENT_FILE.close();
     return {parent_pop, parent_pop_obj_val};
 }
 
