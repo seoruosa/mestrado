@@ -1,5 +1,6 @@
 from mip import Model, Var, GUROBI, BINARY, \
-    CONTINUOUS, xsum, minimize, OptimizationStatus
+    CONTINUOUS, xsum, minimize, OptimizationStatus, \
+    INT_MAX
 from typing import List, Set, Tuple
 
 from read_instance import MMURP
@@ -128,7 +129,7 @@ class MMURPmodel:
     def demand(self, k:int) -> float:    
         return sum((self.__q[j] if self.w[j].xi(k)>0.98 else 0) for j in self.__N)
     
-    def pareto_front(self, steps=30, max_seconds=60, runs_by_step=5) -> Tuple[Set, List]:
+    def pareto_front(self, steps=30, max_seconds=60, runs_by_step=5, max_nodes=INT_MAX) -> Tuple[Set, List]:
         solutions_obj_set = set()
         solutions_x = []
         solutions_obj = []
@@ -143,7 +144,7 @@ class MMURPmodel:
             num_solutions = 0
             
             for i in range(runs_by_step):
-                status = self.model.optimize(max_seconds=max_seconds)
+                status = self.model.optimize(max_seconds=max_seconds, max_nodes=max_nodes)
             
                 if status in (OptimizationStatus.INFEASIBLE, OptimizationStatus.ERROR):
                     break

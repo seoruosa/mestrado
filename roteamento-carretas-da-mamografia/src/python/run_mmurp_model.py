@@ -10,6 +10,8 @@ from time import localtime, strftime
 import argparse
 from util_argparse import dir_path
 
+from mip import INT_MAX
+
 def sim_time(v=1000):
     a = 0
     for i in range(10000):
@@ -25,7 +27,8 @@ if __name__ == '__main__':
     parser.add_argument("-n", "--steps", type=int, required=True, help="Number of differents single objetive function that will be run.")
     parser.add_argument("--run_per_step", type=int, required=False, default=1, help="Number of times that a single OF will be run.")
     parser.add_argument("-t", "--time", type=int, required=True, help="Time limit that each single objective model could run.")
-
+    parser.add_argument("--max_nodes", type=int, required=False, default=INT_MAX, help="Maximum number of nodes on model optimization.")
+    
     args = parser.parse_args()
 
     log_folderpath = args.logDir    
@@ -33,6 +36,7 @@ if __name__ == '__main__':
     pareto_steps = args.steps
     run_per_step = args.run_per_step
     max_sec_per_run = args.time
+    max_nodes = args.max_nodes
 
     with args.instanceFile as filepath:
         
@@ -53,6 +57,7 @@ if __name__ == '__main__':
             log(f"pareto_steps: {pareto_steps}")
             log(f"run_per_step: {run_per_step}")
             log(f"max_sec_per_run: {max_sec_per_run}")
+            log(f"max_nodes: {max_nodes}")
 
             tic = perf_counter_ns()
             
@@ -63,7 +68,7 @@ if __name__ == '__main__':
 
             tic = perf_counter_ns()
             # sim_time()
-            list_map_obj, solutions_x = a.pareto_front(pareto_steps, max_sec_per_run, run_per_step)
+            list_map_obj, solutions_x = a.pareto_front(pareto_steps, max_sec_per_run, run_per_step, max_nodes=max_nodes)
             
             toc = perf_counter_ns()
             log(f"build_pareto: {(toc - tic)/1e9} secs")
