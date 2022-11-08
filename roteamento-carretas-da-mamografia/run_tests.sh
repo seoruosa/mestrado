@@ -13,8 +13,8 @@ LOG_FILE=$RESULTADOS_FOLDER/commit.txt
 
 mkdir -p ${RESULTADOS_FOLDER}
 
-echo $(git log --name-status HEAD^..HEAD) >> $LOG_FILE
-echo `date` >> $LOG_FILE
+# echo $(git log --name-status HEAD^..HEAD) >> $LOG_FILE
+# echo `date` >> $LOG_FILE
 
 for instance in $(ls "$INSTANCES_FOLDER"); do
     echo $instance
