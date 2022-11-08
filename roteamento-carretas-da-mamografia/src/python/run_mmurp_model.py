@@ -21,23 +21,25 @@ if __name__ == '__main__':
     
     parser.add_argument("instanceFile", type=argparse.FileType('r'))
     parser.add_argument("-l", "--logDir", type=dir_path, required=False, default=".", help="Path to a dir to save the log file.")
+    parser.add_argument("--threads", type=int, required=False, default=1, help="Number of threads that the solver could use.")
+    parser.add_argument("-n", "--steps", type=int, required=True, help="Number of differents single objetive function that will be run.")
+    parser.add_argument("--run_per_step", type=int, required=False, default=1, help="Number of times that a single OF will be run.")
+    parser.add_argument("-t", "--time", type=int, required=True, help="Time limit that each single objective model could run.")
 
     args = parser.parse_args()
 
-
     log_folderpath = args.logDir    
+    threads = args.threads
+    pareto_steps = args.steps
+    run_per_step = args.run_per_step
+    max_sec_per_run = args.time
+
     with args.instanceFile as filepath:
         
         filename = os.path.basename(filepath.name)
         instance_name = os.path.splitext(filename)[0]
 
         exp_log_filename = f"{log_folderpath}/exp_{strftime('%Y%m%d', localtime())}.log"
-
-        threads = 1
-        pareto_steps = 30
-        run_per_step = 1
-        max_sec_per_run = 120
-        
 
         with open(exp_log_filename, mode='a') as out:
             log = lambda message : print(message, file=out)
