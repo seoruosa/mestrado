@@ -5,12 +5,26 @@
 #include <chrono>
 #include <algorithm>
 
-
 #include "tests/util.h"
 #include "util.h"
 
 #include "../read_instance/mmurp.h"
 #include "mommurp.h"
+
+template <typename T>
+float avg(std::vector<T> &a)
+{
+    int count = 1;
+    float avg = a.front();
+
+    for (auto &el : a)
+    {
+        avg = (avg*count + el)/(float(count));
+        count++;
+    }
+
+    return avg;
+}
 
 int main(const int argc, const char *argv[])
 {
@@ -24,6 +38,13 @@ int main(const int argc, const char *argv[])
     if (arguments.size() > 1)
     {
         repetitions = std::stoi(arguments[1]);
+    }
+
+    int repetitions_per_tour = 1;
+
+    if (arguments.size() > 2)
+    {
+        repetitions_per_tour = std::stoi(arguments[2]);
     }
 
     int CAPACITY; // TODO should be float
@@ -62,7 +83,6 @@ int main(const int argc, const char *argv[])
     std::cout << "demanda.size: " << demanda.size() << std::endl;
     std::cout << "caminhoes por depot: ";
     print_vetor(max_number_vehicles);
-    
 
     std::cout << filepath << std::endl;
     std::cout << "*************************" << std::endl;
@@ -72,7 +92,8 @@ int main(const int argc, const char *argv[])
     auto RND_ENGINE = std::default_random_engine(SEED);
 
     std::cout << "SEED: " << SEED << std::endl;
-    std::cout << "REPETITIONS: " << repetitions << std::endl;
+    std::cout << "#TESTED TOURS: " << repetitions << std::endl;
+    std::cout << "REPETITIONS: " << repetitions_per_tour << std::endl;
     bool all_results_equal = true;
 
     for (int i = 0; i < repetitions; ++i)
@@ -82,41 +103,65 @@ int main(const int argc, const char *argv[])
             std::shuffle(big_tour.begin(), big_tour.end(), RND_ENGINE);
         }
 
-        // SPLITTING 1
-        auto start = std::chrono::high_resolution_clock::now();
+        bool compare_results;
+        std::chrono::duration<double, std::micro> duration_split_1, duration_total_1, duration_split_2, duration_total_2;
+        DistDemand result_of_splitting;
 
-        auto [result, map] = splitting(dist_nodes_mat, dist_depots_nodes_mat, big_tour,
-                                       demanda, max_number_vehicles, CAPACITY, max_travel_dist);
-        auto end_split_1 = std::chrono::high_resolution_clock::now();
 
-        auto [best_dist, best_demand] = bestResult(result);
+        std::vector<float> results__vec_1;
+        std::vector<float> results__vec_2;
+        for (int j = 0; j < repetitions_per_tour; j++)
+        { // SPLITTING 1
+            auto start = std::chrono::high_resolution_clock::now();
 
-        auto end_total_1 = std::chrono::high_resolution_clock::now();        
+            auto [result, map] = splitting(dist_nodes_mat, dist_depots_nodes_mat, big_tour,
+                                           demanda, max_number_vehicles, CAPACITY, max_travel_dist);
+            auto end_split_1 = std::chrono::high_resolution_clock::now();
 
-        // SPLITTING 2
+            result_of_splitting = bestResult(result);
 
-        auto [result2, map2] = splitting(dist_nodes_mat, dist_depots_nodes_mat, big_tour,
-                                       demanda, max_number_vehicles, CAPACITY, max_travel_dist);
+            auto end_total_1 = std::chrono::high_resolution_clock::now();
 
-        auto end_split_2 = std::chrono::high_resolution_clock::now();
-        
+            // SPLITTING 2
 
-        auto [best_dist_2, best_demand_2] = bestResult(result);
+            auto [result2, map2] = splitting(dist_nodes_mat, dist_depots_nodes_mat, big_tour,
+                                             demanda, max_number_vehicles, CAPACITY, max_travel_dist);
 
-        auto end_total_2 = std::chrono::high_resolution_clock::now();
+            auto end_split_2 = std::chrono::high_resolution_clock::now();
 
-        std::chrono::duration<double, std::micro> duration_split_1(end_split_1 - start);
-        std::chrono::duration<double, std::micro> duration_total_1(end_total_1 - start);
+            auto [best_dist_2, best_demand_2] = bestResult(result);
 
-        std::chrono::duration<double, std::micro> duration_split_2(end_split_2 - end_total_1);
-        std::chrono::duration<double, std::micro> duration_total_2(end_total_2 - end_total_1);
-        bool compare_results = lambdas_are_equal(result2, result);
+            auto end_total_2 = std::chrono::high_resolution_clock::now();
+
+            duration_split_1 = (end_split_1 - start);
+            duration_total_1 = (end_total_1 - start);
+
+            duration_split_2 = (end_split_2 - end_total_1);
+            duration_total_2 = (end_total_2 - end_total_1);
+            compare_results = lambdas_are_equal(result2, result);
+
+            results__vec_1.push_back(duration_total_1.count());
+            results__vec_2.push_back(duration_total_2.count());
+        }
+
+        auto [best_dist, best_demand] = result_of_splitting;
+        auto print_values = [](auto vec){
+            for (auto &el : vec)
+            {
+                std::cout << el << " ";
+            }
+            std::cout << std::endl;
+        };
 
         std::cout << "RESULTADOS >> " << (compare_results ? "IGUAIS" : "DIFERENTES") << std::endl;
-        std::cout << "DURACAO SPLITTING 1: " << duration_split_1.count() / 1E6 << std::endl;
-        std::cout << "DURACAO TOTAL 1: " << duration_total_1.count() / 1E6 << std::endl;
-        std::cout << "DURACAO SPLITTING 2: " << duration_split_2.count() / 1E6 << std::endl;
-        std::cout << "DURACAO TOTAL 2: " << duration_total_2.count() / 1E6 << std::endl;
+        // std::cout << "DURACAO SPLITTING 1: " << duration_split_1.count() / 1E6 << std::endl;
+        // print_values(results__vec_1);
+        std::cout << "*************************" << std::endl;
+
+        std::cout << "DURACAO TOTAL 1: " << avg(results__vec_1) / 1E6 << std::endl;
+        // std::cout << "DURACAO SPLITTING 2: " << duration_split_2.count() / 1E6 << std::endl;
+        // print_values(results__vec_2);
+        std::cout << "DURACAO TOTAL 2: " << avg(results__vec_2) / 1E6 << std::endl;
 
         std::cout << "dist: " << best_dist << ", demand: " << best_demand << std::endl;
         std::cout << ">> " << i << " *************************" << std::endl;
