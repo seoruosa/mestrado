@@ -123,6 +123,11 @@ SplittedResult splitting2(const std::vector<std::vector<float>> &dist_nodes_dema
     int n = big_tour.size();
     int number_depots = max_number_vehicles.size();
 
+    int j;
+    float tour_demand;
+    float tour_distance;
+    bool stop;
+
     Lambda lambda(n + 1, std::list<Label>({}));
     MapPred map_label_pred;
 
@@ -145,14 +150,14 @@ SplittedResult splitting2(const std::vector<std::vector<float>> &dist_nodes_dema
 
             for (auto &label : lambda[i - 1])
             {
-                int j = i;
-                float tour_demand = 0;
-                float tour_distance = 0;
+                j = i;
+                tour_demand = 0;
+                tour_distance = 0;
 
-                bool stop = false;
+                stop = false;
                 Label next_label(label);
 
-                do
+                while ((j < n) && (!stop))
                 {
                     tour_demand += demand[T(j)];
 
@@ -186,8 +191,6 @@ SplittedResult splitting2(const std::vector<std::vector<float>> &dist_nodes_dema
                         if ((dist_prev_actual_node <= max_dist_between_nodes) &&
                             (tour_demand <= max_demand))
                         {
-                            stop = false;
-
                             tour_distance = dist_prev_actual_node;
 
                             next_label.inc_distance(tour_distance);
@@ -208,7 +211,7 @@ SplittedResult splitting2(const std::vector<std::vector<float>> &dist_nodes_dema
                     }
 
                     ++j;
-                } while ((j < n) && (!stop));
+                }
             }
         }
     }
