@@ -7,4 +7,4 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_library(splitLib mommurp.cpp label.cpp util.cpp)
 
-# add_subdirectory(tests)
+add_subdirectory(tests)

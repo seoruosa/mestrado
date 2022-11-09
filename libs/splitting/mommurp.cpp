@@ -112,6 +112,110 @@ SplittedResult splitting(const std::vector<std::vector<float>> &dist_nodes_deman
     return {lambda, map_label_pred};
 }
 
+SplittedResult splitting2(const std::vector<std::vector<float>> &dist_nodes_demand,
+                         const std::vector<std::vector<float>> &dist_nodes_depot,
+                         const std::vector<int> &big_tour,
+                         const std::vector<float> &demand,
+                         const std::vector<int> &max_number_vehicles,
+                         const float &max_demand,
+                         const float &max_dist_between_nodes)
+{
+    int n = big_tour.size();
+    int number_depots = max_number_vehicles.size();
+
+    Lambda lambda(n + 1, std::list<Label>({}));
+    MapPred map_label_pred;
+
+    lambda[0].push_back(Label(number_depots));    
+
+    // function that return index of big tour index i
+    auto T = [big_tour](int i)
+    { return big_tour[i - 1]; };
+
+    auto remove_all_dominated_by = [](std::list<Label> &labels_to_clean, Label &next_label)
+    {
+        labels_to_clean.remove_if([&](auto el)
+                                  { return (next_label.weak_dominates(el)); });
+    };
+
+    for (int i = 1; i <= n; i++)
+    {
+        for (int dk = 0; dk < number_depots; dk++)
+        {
+
+            for (auto &label : lambda[i - 1])
+            {
+                int j = i;
+                float tour_demand = 0;
+                float tour_distance = 0;
+
+                bool stop = false;
+                Label next_label(label);
+
+                do
+                {
+                    tour_demand += demand[T(j)];
+
+                    if (i == j)
+                    {
+                        if (label.num_vehicles_depot(dk) + 1 <= max_number_vehicles[dk])
+                        {
+                            tour_distance = dist_nodes_depot[dk][T(i)];
+
+                            next_label.inc_distance(tour_distance);
+                            next_label.inc_demand(demand[T(i)]);
+                            next_label.inc_num_vehicles_depot(dk);
+
+                            if (next_label.is_not_dominated_by(lambda[i]))
+                            {
+                                remove_all_dominated_by(lambda[i], next_label);
+                                lambda[i].push_back(next_label);
+
+                                map_label_pred[lambda[i].back().get_index()] = {label.get_index(), dk};
+                            }
+                        }
+                        else
+                        {
+                            stop = true;
+                        }
+                    }
+                    else
+                    {
+                        float dist_prev_actual_node = dist_nodes_demand[T(j - 1)][T(j)];
+
+                        if ((dist_prev_actual_node <= max_dist_between_nodes) &&
+                            (tour_demand <= max_demand))
+                        {
+                            stop = false;
+
+                            tour_distance = dist_prev_actual_node;
+
+                            next_label.inc_distance(tour_distance);
+                            next_label.inc_demand(demand[T(j)]);
+
+                            if (next_label.is_not_dominated_by(lambda[j]))
+                            {
+                                remove_all_dominated_by(lambda[j], next_label);
+                                lambda[j].push_back(next_label);
+
+                                map_label_pred[lambda[j].back().get_index()] = {label.get_index(), dk};
+                            }
+                        }
+                        else
+                        {
+                            stop = true;
+                        }
+                    }
+
+                    ++j;
+                } while ((j < n) && (!stop));
+            }
+        }
+    }
+
+    return {lambda, map_label_pred};
+}
+
 DistDemand bestResult(const Lambda &result)
 {
     struct

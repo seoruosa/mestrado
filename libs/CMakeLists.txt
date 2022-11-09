@@ -5,6 +5,7 @@ project(libs)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# study this: https://stackoverflow.com/questions/59733496/how-to-exclude-compile-options-for-one-target
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O3 -march=native -fconcepts")
 
 add_executable(
@@ -16,6 +17,10 @@ add_executable(
     NSGAII_MMURP 
     nsga_mmurp/nsgaii_mmurp.cpp
     )
+add_executable(
+    compare
+    splitting/comparing.cpp
+)
 
 target_link_libraries(
     NSGAII_MMURP PUBLIC 
@@ -35,6 +40,14 @@ target_link_libraries(
     playground
     instancelib
     splitLib
+    testlib
+)
+
+target_link_libraries(
+    compare
+    instancelib
+    splitLib
+    testlib
 )
 
 add_subdirectory(read_instance)

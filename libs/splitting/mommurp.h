@@ -30,5 +30,13 @@ SplittedResult splitting(const std::vector<std::vector<float>> &dist_nodes_deman
                         const float &max_demand,
                         const float &max_dist_between_nodes);
 
+SplittedResult splitting2(const std::vector<std::vector<float>> &dist_nodes_demand,
+                         const std::vector<std::vector<float>> &dist_nodes_depot,
+                         const std::vector<int> &big_tour,
+                         const std::vector<float> &demand,
+                         const std::vector<int> &max_number_vehicles,
+                         const float &max_demand,
+                         const float &max_dist_between_nodes);
+
 void print_lambda(const Lambda &lambda);
 DistDemand bestResult(const Lambda &result);
