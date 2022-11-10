@@ -19,11 +19,9 @@
 int main(const int argc, const char *argv[])
 {
     NSGAII_MMURP_Params CONFIG = read_input(argc, argv);
-
-    MMURP_data instance_data(CONFIG.instance_path);
-
-    
     std::string name = std::filesystem::path(CONFIG.instance_path).stem().string();
+    
+    MMURP_data instance_data(CONFIG.instance_path);
 
     auto REF_POINT = ref_point(instance_data.dist_nodes_nodes, instance_data.dist_depots_nodes);
 
