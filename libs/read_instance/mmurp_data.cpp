@@ -11,6 +11,8 @@ MMURP_data::MMURP_data(std::string instance_path) : instance_path(instance_path)
                     MMURP_data::max_travel_dist, "", instance_path);
     
     MMURP_data::vehicle_capacity = float(int_vehicle_capacity);
+    MMURP_data::n_clients = MMURP_data::demand.size();
+    MMURP_data::n_depots = MMURP_data::dist_depots_nodes.size();
 }
 
 MMURP_data::~MMURP_data()

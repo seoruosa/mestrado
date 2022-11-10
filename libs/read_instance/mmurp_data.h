@@ -29,4 +29,10 @@ public:
 
     // max allowed travelling distance between 2 clients
     float max_travel_dist;
+
+    // number of clients
+    int n_clients;
+
+    // number of depots
+    int n_depots;
 };

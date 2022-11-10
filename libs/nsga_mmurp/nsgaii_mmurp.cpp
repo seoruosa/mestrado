@@ -22,32 +22,23 @@ int main(const int argc, const char *argv[])
 
     MMURP_data instance_data(CONFIG.instance_path);
 
-    // Read instance
-    float CAPACITY = instance_data.vehicle_capacity;
-    std::vector<std::vector<float>> dist_nodes_mat = instance_data.dist_nodes_nodes;
-    std::vector<std::vector<float>> dist_depots_nodes_mat = instance_data.dist_depots_nodes;
-    std::vector<float> demand = instance_data.demand;
-    std::vector<int> max_number_vehicles = instance_data.number_vehicles;
-    float max_travel_dist = instance_data.max_travel_dist;
+    
     std::string name = std::filesystem::path(CONFIG.instance_path).stem().string();
 
-    // read_instance(dist_nodes_mat, dist_depots_nodes_mat, demand, CAPACITY, max_number_vehicles, max_travel_dist, 
-    //              name, CONFIG.instance_path);
-
-    auto REF_POINT = ref_point(dist_nodes_mat, dist_depots_nodes_mat);
+    auto REF_POINT = ref_point(instance_data.dist_nodes_nodes, instance_data.dist_depots_nodes);
 
     std::ofstream BEGIN_OUT_FILE(file_name(name, "in"), std::ios::ate);
     std::ofstream END_OUT_FILE(file_name(name, "out"), std::ios::ate);
 
-    print_params(CONFIG, CAPACITY, name, BEGIN_OUT_FILE);
+    print_params(CONFIG, instance_data.vehicle_capacity, name, BEGIN_OUT_FILE);
     BEGIN_OUT_FILE << REF_POINT << std::endl;
-    print_params(CONFIG, CAPACITY, name, END_OUT_FILE);
+    print_params(CONFIG, instance_data.vehicle_capacity, name, END_OUT_FILE);
     END_OUT_FILE << REF_POINT << std::endl;
 
     auto calc = [&](Individual x)
     {
-        SplittedResult splitting_result = splitting2(dist_nodes_mat, dist_depots_nodes_mat, x, demand, max_number_vehicles,
-                                                    CAPACITY, max_travel_dist);
+        SplittedResult splitting_result = splitting2(instance_data.dist_nodes_nodes, instance_data.dist_depots_nodes, x, instance_data.demand, instance_data.number_vehicles,
+                                                    instance_data.vehicle_capacity, instance_data.max_travel_dist);
         
         auto [dist_percorrida, demanda_atendida] = bestResult(splitting_result.lambda);
 
@@ -56,7 +47,7 @@ int main(const int argc, const char *argv[])
 
     int number_of_obj = 2;
 
-    auto [pop, pop_obj_val] = NSGAII_mod(CONFIG.size_pop, CONFIG.number_generations * demand.size(), demand.size(), calc, number_of_obj,
+    auto [pop, pop_obj_val] = NSGAII_mod(CONFIG.size_pop, CONFIG.number_generations * instance_data.n_clients, instance_data.n_clients, calc, number_of_obj,
                                          CONFIG.mutation_rate, initialize_population, BEGIN_OUT_FILE, END_OUT_FILE);
 
     std::cout << REF_POINT << std::endl;
