@@ -18,7 +18,7 @@ add_custom_command(TARGET play_instance
                    ${CMAKE_CURRENT_BINARY_DIR}/play_instance 
                    ${PROJECT_SOURCE_DIR}/play_instance)
 
-add_library(instancelib mmurp.cpp util.cpp)
+add_library(instancelib mmurp.cpp util.cpp mmurp_data.cpp)
 
 target_link_libraries(
     play_instance
