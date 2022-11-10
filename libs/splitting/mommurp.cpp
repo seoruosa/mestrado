@@ -127,6 +127,7 @@ SplittedResult splitting2(const std::vector<std::vector<float>> &dist_nodes_dema
     float tour_demand;
     float tour_distance;
     bool stop;
+    float dist_prev_actual_node;
 
     Lambda lambda(n + 1, std::list<Label>({}));
     MapPred map_label_pred;
@@ -186,7 +187,7 @@ SplittedResult splitting2(const std::vector<std::vector<float>> &dist_nodes_dema
                     }
                     else
                     {
-                        float dist_prev_actual_node = dist_nodes_demand[T(j - 1)][T(j)];
+                        dist_prev_actual_node = dist_nodes_demand[T(j - 1)][T(j)];
 
                         if ((dist_prev_actual_node <= max_dist_between_nodes) &&
                             (tour_demand <= max_demand))
