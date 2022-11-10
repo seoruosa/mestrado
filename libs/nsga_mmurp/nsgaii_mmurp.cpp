@@ -14,22 +14,25 @@
 
 #include "../read_instance/mmurp.h"
 #include "../utils/performance.h"
+#include "../read_instance/mmurp_data.h"
 
 int main(const int argc, const char *argv[])
 {
     NSGAII_MMURP_Params CONFIG = read_input(argc, argv);
 
+    MMURP_data instance_data(CONFIG.instance_path);
+
     // Read instance
-    int CAPACITY; // TODO should be float
-    std::vector<std::vector<float>> dist_nodes_mat;
-    std::vector<std::vector<float>> dist_depots_nodes_mat;
-    std::vector<float> demand;
-    std::vector<int> max_number_vehicles;
-    float max_travel_dist;
+    float CAPACITY = instance_data.vehicle_capacity;
+    std::vector<std::vector<float>> dist_nodes_mat = instance_data.dist_nodes_nodes;
+    std::vector<std::vector<float>> dist_depots_nodes_mat = instance_data.dist_depots_nodes;
+    std::vector<float> demand = instance_data.demand;
+    std::vector<int> max_number_vehicles = instance_data.number_vehicles;
+    float max_travel_dist = instance_data.max_travel_dist;
     std::string name = std::filesystem::path(CONFIG.instance_path).stem().string();
 
-    read_instance(dist_nodes_mat, dist_depots_nodes_mat, demand, CAPACITY, max_number_vehicles, max_travel_dist, 
-                 name, CONFIG.instance_path);
+    // read_instance(dist_nodes_mat, dist_depots_nodes_mat, demand, CAPACITY, max_number_vehicles, max_travel_dist, 
+    //              name, CONFIG.instance_path);
 
     auto REF_POINT = ref_point(dist_nodes_mat, dist_depots_nodes_mat);
 
@@ -43,7 +46,7 @@ int main(const int argc, const char *argv[])
 
     auto calc = [&](Individual x)
     {
-        SplittedResult splitting_result = splitting(dist_nodes_mat, dist_depots_nodes_mat, x, demand, max_number_vehicles,
+        SplittedResult splitting_result = splitting2(dist_nodes_mat, dist_depots_nodes_mat, x, demand, max_number_vehicles,
                                                     CAPACITY, max_travel_dist);
         
         auto [dist_percorrida, demanda_atendida] = bestResult(splitting_result.lambda);
