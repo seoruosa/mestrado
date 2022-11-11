@@ -144,10 +144,9 @@ std::tuple<std::vector<Individual>, std::vector<std::vector<float>>> NSGAII_mod(
         time_duration = perf::time::duration(time_start);
         perf::save_measurement("next_generation:fast_sort", time_duration, MEASUREMENT_FILE);
 
+        time_start = perf::time::start();
         std::vector<std::vector<int>> next_pop;
         std::vector<int> next_pop_idx;
-
-        time_start = perf::time::start();
         int i = 0;
         while ((int)(next_pop_idx.size() + fronts[i].size()) <= size_pop)
         {
@@ -157,7 +156,7 @@ std::tuple<std::vector<Individual>, std::vector<std::vector<float>>> NSGAII_mod(
         time_duration = perf::time::duration(time_start);
         perf::save_measurement("next_generation:select_except_last", time_duration, MEASUREMENT_FILE);
 
-        time_start = perf::time::start();
+        time_start = perf::time::start(); // start next_generation:crowd_sort_and_finish
         distances = crowding_distance_assignment(next_gen_pop_obj_val, fronts[i]);
 
         perm = generate_int_values(fronts[i].size());
@@ -184,8 +183,9 @@ std::tuple<std::vector<Individual>, std::vector<std::vector<float>>> NSGAII_mod(
         {
             auto idx = next_pop_idx[i];
             parent_pop[i] = next_gen_pop[idx];
+            parent_pop_obj_val[i] = next_gen_pop_obj_val[idx];
         }
-        parent_pop_obj_val = evaluate_pop_obj(parent_pop, f, number_obj);
+        // parent_pop_obj_val = evaluate_pop_obj(parent_pop, f, number_obj);
         time_duration = perf::time::duration(time_start);
         perf::save_measurement("next_generation:crowd_sort_and_finish", time_duration, MEASUREMENT_FILE);
     }
