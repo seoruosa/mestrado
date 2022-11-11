@@ -17,13 +17,25 @@ float avg(std::vector<T> &a)
     int count = 1;
     float avg = a.front();
 
-    for (auto &el : a)
+    for (int i = 1; i < a.size(); i++)
     {
-        avg = (avg*count + el)/(float(count));
+        avg = (avg*count + a[i])/(float(count));
         count++;
     }
 
     return avg;
+}
+
+template <typename T>
+float sum(std::vector<T> &a)
+{
+    int agg = 0;
+    for (auto &el : a)
+    {
+        agg += el;
+    }
+
+    return agg;
 }
 
 int main(const int argc, const char *argv[])
@@ -158,10 +170,12 @@ int main(const int argc, const char *argv[])
         // print_values(results__vec_1);
         std::cout << "*************************" << std::endl;
 
-        std::cout << "DURACAO TOTAL 1: " << avg(results__vec_1) / 1E6 << std::endl;
+        std::cout << "DURACAO TOTAL 1 (avg): " << avg(results__vec_1) / 1E6 << std::endl;
+        std::cout << "DURACAO TOTAL 1 (sum): " << sum(results__vec_1) / 1E6 << std::endl;
         // std::cout << "DURACAO SPLITTING 2: " << duration_split_2.count() / 1E6 << std::endl;
         // print_values(results__vec_2);
-        std::cout << "DURACAO TOTAL 2: " << avg(results__vec_2) / 1E6 << std::endl;
+        std::cout << "DURACAO TOTAL 2 (avg) " << avg(results__vec_2) / 1E6 << std::endl;
+        std::cout << "DURACAO TOTAL 2 (sum): " << sum(results__vec_2) / 1E6 << std::endl;
 
         std::cout << "dist: " << best_dist << ", demand: " << best_demand << std::endl;
         std::cout << ">> " << i << " *************************" << std::endl;
