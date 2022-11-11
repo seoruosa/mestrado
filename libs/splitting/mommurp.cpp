@@ -260,7 +260,9 @@ Split_mmurp::Split_mmurp(MMURP_data &instance) : instance(instance)
 {
 }
 
-Split_mmurp::~Split_mmurp() {}
+Split_mmurp::~Split_mmurp() {
+}
+
 SplittedResult Split_mmurp::solve(const std::vector<int> &big_tour)
 {
     int j;

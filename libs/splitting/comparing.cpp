@@ -10,6 +10,7 @@
 
 #include "../read_instance/mmurp.h"
 #include "mommurp.h"
+#include "../read_instance/mmurp_data.h"
 
 template <typename T>
 float avg(std::vector<T> &a)
@@ -70,6 +71,9 @@ int main(const int argc, const char *argv[])
 
     read_instance(dist_nodes_mat, dist_depots_nodes_mat, demanda, CAPACITY, max_number_vehicles, max_travel_dist,
                   name, filepath);
+    
+    MMURP_data instance(filepath);
+    Split_mmurp split(instance);
 
     auto print_vetor = [](auto vetor)
     {
@@ -136,8 +140,10 @@ int main(const int argc, const char *argv[])
 
             // SPLITTING 2
 
-            auto [result2, map2] = splitting(dist_nodes_mat, dist_depots_nodes_mat, big_tour,
-                                             demanda, max_number_vehicles, CAPACITY, max_travel_dist);
+            // auto [result2, map2] = splitting(dist_nodes_mat, dist_depots_nodes_mat, big_tour,
+            //                                  demanda, max_number_vehicles, CAPACITY, max_travel_dist);
+
+            auto [result2, map2] = split.solve(big_tour);                                             
 
             auto end_split_2 = std::chrono::high_resolution_clock::now();
 
