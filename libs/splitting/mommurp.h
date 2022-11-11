@@ -4,6 +4,8 @@
 #include <vector>
 #include <map>
 
+#include "../read_instance/mmurp_data.h"
+
 typedef struct
 {
     size_t pred;
@@ -40,3 +42,13 @@ SplittedResult splitting2(const std::vector<std::vector<float>> &dist_nodes_dema
 
 void print_lambda(const Lambda &lambda);
 DistDemand bestResult(const Lambda &result);
+
+class Split_mmurp
+{
+protected:
+    MMURP_data instance;
+public:
+    Split_mmurp(MMURP_data &instance);
+    ~Split_mmurp();
+    SplittedResult solve(const std::vector<int> &big_tour);
+};

@@ -22,7 +22,7 @@ SplittedResult splitting(const std::vector<std::vector<float>> &dist_nodes_deman
     Lambda lambda(n + 1, std::list<Label>({}));
     MapPred map_label_pred;
 
-    lambda[0].push_back(Label(number_depots));    
+    lambda[0].push_back(Label(number_depots));
 
     // function that return index of big tour index i
     auto T = [big_tour](int i)
@@ -113,12 +113,12 @@ SplittedResult splitting(const std::vector<std::vector<float>> &dist_nodes_deman
 }
 
 SplittedResult splitting2(const std::vector<std::vector<float>> &dist_nodes_demand,
-                         const std::vector<std::vector<float>> &dist_nodes_depot,
-                         const std::vector<int> &big_tour,
-                         const std::vector<float> &demand,
-                         const std::vector<int> &max_number_vehicles,
-                         const float &max_demand,
-                         const float &max_dist_between_nodes)
+                          const std::vector<std::vector<float>> &dist_nodes_depot,
+                          const std::vector<int> &big_tour,
+                          const std::vector<float> &demand,
+                          const std::vector<int> &max_number_vehicles,
+                          const float &max_demand,
+                          const float &max_dist_between_nodes)
 {
     int n = big_tour.size();
     int number_depots = max_number_vehicles.size();
@@ -132,7 +132,7 @@ SplittedResult splitting2(const std::vector<std::vector<float>> &dist_nodes_dema
     Lambda lambda(n + 1, std::list<Label>({}));
     MapPred map_label_pred;
 
-    lambda[0].push_back(Label(number_depots));    
+    lambda[0].push_back(Label(number_depots));
 
     // function that return index of big tour index i
     auto T = [big_tour](int i)
@@ -239,7 +239,7 @@ DistDemand bestResult(const Lambda &result)
             return output.distDemand();
         }
     }
-    
+
     return Label(0).distDemand();
 }
 
@@ -254,4 +254,108 @@ void print_map_pred(std::string_view comment, const std::map<size_t, PredDepot> 
         std::cout << '\n';
     }
     std::cout << "------------------------------------" << std::endl;
+}
+
+Split_mmurp::Split_mmurp(MMURP_data &instance) : instance(instance)
+{
+}
+
+Split_mmurp::~Split_mmurp() {}
+SplittedResult Split_mmurp::solve(const std::vector<int> &big_tour)
+{
+    int j;
+    float tour_demand;
+    float tour_distance;
+    bool stop;
+    float dist_prev_actual_node;
+
+    Lambda lambda(instance.n_clients + 1, std::list<Label>({}));
+    MapPred map_label_pred;
+
+    lambda[0].push_back(Label(instance.n_depots));
+
+    // function that return index of big tour index i
+    auto T = [big_tour](int i)
+    { return big_tour[i - 1]; };
+
+    auto remove_all_dominated_by = [](std::list<Label> &labels_to_clean, Label &next_label)
+    {
+        labels_to_clean.remove_if([&](auto el)
+                                  { return (next_label.weak_dominates(el)); });
+    };
+
+    for (int i = 1; i <= instance.n_clients; i++)
+    {
+        for (int dk = 0; dk < instance.n_depots; dk++)
+        {
+
+            for (auto &label : lambda[i - 1])
+            {
+                j = i;
+                tour_demand = 0;
+                tour_distance = 0;
+
+                stop = false;
+                Label next_label(label);
+
+                while ((j < instance.n_clients) && (!stop))
+                {
+                    tour_demand += instance.demand[T(j)];
+
+                    if (i == j)
+                    {
+                        if (label.num_vehicles_depot(dk) + 1 <= instance.number_vehicles[dk])
+                        {
+                            tour_distance = instance.dist_depots_nodes[dk][T(i)];
+
+                            next_label.inc_distance(tour_distance);
+                            next_label.inc_demand(instance.demand[T(i)]);
+                            next_label.inc_num_vehicles_depot(dk);
+
+                            if (next_label.is_not_dominated_by(lambda[i]))
+                            {
+                                remove_all_dominated_by(lambda[i], next_label);
+                                lambda[i].push_back(next_label);
+
+                                map_label_pred[lambda[i].back().get_index()] = {label.get_index(), dk};
+                            }
+                        }
+                        else
+                        {
+                            stop = true;
+                        }
+                    }
+                    else
+                    {
+                        dist_prev_actual_node = instance.dist_nodes_nodes[T(j - 1)][T(j)];
+
+                        if ((dist_prev_actual_node <= instance.max_travel_dist) &&
+                            (tour_demand <= instance.vehicle_capacity))
+                        {
+                            tour_distance = dist_prev_actual_node;
+
+                            next_label.inc_distance(tour_distance);
+                            next_label.inc_demand(instance.demand[T(j)]);
+
+                            if (next_label.is_not_dominated_by(lambda[j]))
+                            {
+                                remove_all_dominated_by(lambda[j], next_label);
+                                lambda[j].push_back(next_label);
+
+                                map_label_pred[lambda[j].back().get_index()] = {label.get_index(), dk};
+                            }
+                        }
+                        else
+                        {
+                            stop = true;
+                        }
+                    }
+
+                    ++j;
+                }
+            }
+        }
+    }
+
+    return {lambda, map_label_pred};
 }
