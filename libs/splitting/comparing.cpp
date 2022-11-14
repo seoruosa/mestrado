@@ -20,7 +20,7 @@ float avg(std::vector<T> &a)
 
     for (int i = 1; i < a.size(); i++)
     {
-        avg = (avg*count + a[i])/(float(count));
+        avg = (avg*float(count) + a[i])/(float(count + 1));
         count++;
     }
 
@@ -30,7 +30,7 @@ float avg(std::vector<T> &a)
 template <typename T>
 float sum(std::vector<T> &a)
 {
-    int agg = 0;
+    float agg = 0;
     for (auto &el : a)
     {
         agg += el;
@@ -158,8 +158,8 @@ int main(const int argc, const char *argv[])
             duration_total_2 = (end_total_2 - end_total_1);
             compare_results = lambdas_are_equal(result2, result);
 
-            results__vec_1.push_back(duration_total_1.count());
-            results__vec_2.push_back(duration_total_2.count());
+            results__vec_1.push_back(duration_total_1.count() / 1E6);
+            results__vec_2.push_back(duration_total_2.count() / 1E6);
         }
 
         auto [best_dist, best_demand] = result_of_splitting;
@@ -176,12 +176,12 @@ int main(const int argc, const char *argv[])
         // print_values(results__vec_1);
         std::cout << "*************************" << std::endl;
 
-        std::cout << "DURACAO TOTAL 1 (avg): " << avg(results__vec_1) / 1E6 << std::endl;
-        std::cout << "DURACAO TOTAL 1 (sum): " << sum(results__vec_1) / 1E6 << std::endl;
-        // std::cout << "DURACAO SPLITTING 2: " << duration_split_2.count() / 1E6 << std::endl;
+        std::cout << "DURACAO TOTAL 1 (avg): " << avg(results__vec_1) << std::endl;
+        std::cout << "DURACAO TOTAL 1 (sum): " << sum(results__vec_1) << std::endl;
+        // std::cout << "DURACAO SPLITTING 2: " << duration_split_2.count() << std::endl;
         // print_values(results__vec_2);
-        std::cout << "DURACAO TOTAL 2 (avg) " << avg(results__vec_2) / 1E6 << std::endl;
-        std::cout << "DURACAO TOTAL 2 (sum): " << sum(results__vec_2) / 1E6 << std::endl;
+        std::cout << "DURACAO TOTAL 2 (avg) " << avg(results__vec_2) << std::endl;
+        std::cout << "DURACAO TOTAL 2 (sum): " << sum(results__vec_2) << std::endl;
 
         std::cout << "dist: " << best_dist << ", demand: " << best_demand << std::endl;
         std::cout << ">> " << i << " *************************" << std::endl;
