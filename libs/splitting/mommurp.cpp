@@ -290,67 +290,63 @@ SplittedResult Split_mmurp::solve(const std::vector<int> &big_tour)
     {
         for (int dk = 0; dk < instance.n_depots; dk++)
         {
-
             for (auto &label : lambda[i - 1])
             {
-                j = i;
                 tour_demand = 0;
                 tour_distance = 0;
-
                 stop = false;
                 Label next_label(label);
+
+                tour_demand += instance.demand[T(i)];
+
+                if (label.num_vehicles_depot(dk) + 1 <= instance.number_vehicles[dk])
+                {
+                    tour_distance = instance.dist_depots_nodes[dk][T(i)];
+
+                    next_label.inc_distance(tour_distance);
+                    next_label.inc_demand(instance.demand[T(i)]);
+                    next_label.inc_num_vehicles_depot(dk);
+
+                    if (next_label.is_not_dominated_by(lambda[i]))
+                    {
+                        remove_all_dominated_by(lambda[i], next_label);
+                        lambda[i].push_back(next_label);
+
+                        map_label_pred[lambda[i].back().get_index()] = {label.get_index(), dk};
+                    }
+                }
+                else
+                {
+                    stop = true;
+                }
+
+                j = i + 1;
 
                 while ((j < instance.n_clients) && (!stop))
                 {
                     tour_demand += instance.demand[T(j)];
 
-                    if (i == j)
+                    dist_prev_actual_node = instance.dist_nodes_nodes[T(j - 1)][T(j)];
+
+                    if ((dist_prev_actual_node <= instance.max_travel_dist) &&
+                        (tour_demand <= instance.vehicle_capacity))
                     {
-                        if (label.num_vehicles_depot(dk) + 1 <= instance.number_vehicles[dk])
+                        tour_distance = dist_prev_actual_node;
+
+                        next_label.inc_distance(tour_distance);
+                        next_label.inc_demand(instance.demand[T(j)]);
+
+                        if (next_label.is_not_dominated_by(lambda[j]))
                         {
-                            tour_distance = instance.dist_depots_nodes[dk][T(i)];
+                            remove_all_dominated_by(lambda[j], next_label);
+                            lambda[j].push_back(next_label);
 
-                            next_label.inc_distance(tour_distance);
-                            next_label.inc_demand(instance.demand[T(i)]);
-                            next_label.inc_num_vehicles_depot(dk);
-
-                            if (next_label.is_not_dominated_by(lambda[i]))
-                            {
-                                remove_all_dominated_by(lambda[i], next_label);
-                                lambda[i].push_back(next_label);
-
-                                map_label_pred[lambda[i].back().get_index()] = {label.get_index(), dk};
-                            }
-                        }
-                        else
-                        {
-                            stop = true;
+                            map_label_pred[lambda[j].back().get_index()] = {label.get_index(), dk};
                         }
                     }
                     else
                     {
-                        dist_prev_actual_node = instance.dist_nodes_nodes[T(j - 1)][T(j)];
-
-                        if ((dist_prev_actual_node <= instance.max_travel_dist) &&
-                            (tour_demand <= instance.vehicle_capacity))
-                        {
-                            tour_distance = dist_prev_actual_node;
-
-                            next_label.inc_distance(tour_distance);
-                            next_label.inc_demand(instance.demand[T(j)]);
-
-                            if (next_label.is_not_dominated_by(lambda[j]))
-                            {
-                                remove_all_dominated_by(lambda[j], next_label);
-                                lambda[j].push_back(next_label);
-
-                                map_label_pred[lambda[j].back().get_index()] = {label.get_index(), dk};
-                            }
-                        }
-                        else
-                        {
-                            stop = true;
-                        }
+                        stop = true;
                     }
 
                     ++j;
