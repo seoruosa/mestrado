@@ -63,6 +63,26 @@ public:
     ~Individual();
 };
 
+class Problem
+{
+private:
+    int m; // number of objectives
+    
+public:
+    Problem(const std::string instance_path);
+    ~Problem();
+    std::vector<float> f(Individual individual);
+    int number_objectives();
+};
+
+Problem::Problem(const std::string instance_path)
+{
+}
+
+Problem::~Problem()
+{
+}
+
 
 /*
 * [PD] => Problem Dependent
@@ -82,9 +102,11 @@ public:
 *   
 *   ************************************************************************
 *   * logging data
+*   * have an unique SEED for random generators
 */
 
 // TODO logging stuff on algorithms
 
 // https://refactoring.guru/design-patterns/builder -> builder
 // https://refactoring.guru/design-patterns/template-method -> template
+
