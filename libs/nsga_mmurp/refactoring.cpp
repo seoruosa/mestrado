@@ -17,8 +17,8 @@ protected:
     unsigned seed; // = std::chrono::system_clock::now().time_since_epoch().count();
     // std::default_random_engine RND_ENGINE = std::default_random_engine(seed);
 public:
-    NSGAII(int population_size, int number_generations, float mutation_rate, unsigned seed);
-    NSGAII(int population_size, int number_generations, float mutation_rate);
+    NSGAII(int population_size, int number_generations, float mutation_rate, int number_objectives, unsigned seed);
+    NSGAII(int population_size, int number_generations, float mutation_rate, int number_objectives);
     ~NSGAII();
     virtual void initialize() const = 0;
     virtual std::vector<Individual> & parent_selection() const = 0;
