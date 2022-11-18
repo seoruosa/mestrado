@@ -30,7 +30,7 @@ public:
     virtual std::vector<Individual> & parent_selection() const = 0;
     virtual Individual & crossover(Individual & p1, Individual & p2) const = 0;
     virtual Individual & mutate(Individual & ind) const = 0;
-    std::tuple<std::vector<std::vector<int>>, std::vector<int>> fast_non_dominated_sort();
+    std::tuple<std::vector<std::vector<int>>, std::vector<int>> fast_non_dominated_sort(std::vector<std::vector<float>> &pop_obj_val);
     std::vector<int> crowding_distance_assignment(std::vector<std::vector<float>> &pop_obj_value, std::vector<int> &rank, 
         std::vector<int> &idx_vec);
 
