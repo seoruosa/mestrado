@@ -13,23 +13,33 @@ public:
 
 class NSGAII
 {
-private:
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine RND_ENGINE = std::default_random_engine(seed);
+protected:
+    unsigned seed; // = std::chrono::system_clock::now().time_since_epoch().count();
+    // std::default_random_engine RND_ENGINE = std::default_random_engine(seed);
 public:
-    NSGAII(/* args */);
+    NSGAII(int population_size, int number_generations, float mutation_rate, unsigned seed);
+    NSGAII(int population_size, int number_generations, float mutation_rate);
     ~NSGAII();
-    
+    virtual void initialize() const = 0;
+    virtual std::vector<Individual> & parent_selection() const = 0;
+    virtual Individual & crossover(Individual & p1, Individual & p2) const = 0;
+    virtual Individual & mutate(Individual & ind) const = 0;
+    std::tuple<std::vector<std::vector<int>>, std::vector<int>> fast_non_dominated_sort(std::vector<std::vector<float>> &pop_obj_val);
+    std::vector<int> crowding_distance_assignment(std::vector<std::vector<float>> &pop_obj_value, std::vector<int> &rank, 
+        std::vector<int> &idx_vec);
+
+    void run_default();
 };
 
 class Mutation
 {
 private:
     double mutation_rate_;
-    int seed_;
+    unsigned seed_;
 public:
-    Mutation(/* args */);
-    virtual void mutate(Individual & indiv) const = 0;
+    Mutation(unsigned seed);
+    Mutation();
+    virtual Individual & mutate(Individual & indiv) const = 0;
     ~Mutation();
 };
 
@@ -61,6 +71,7 @@ private:
 public:
     Individual(/* args */);
     ~Individual();
+    virtual std::vector<float> & evaluate() const = 0;
 };
 
 class Problem
@@ -71,18 +82,8 @@ private:
 public:
     Problem(const std::string instance_path);
     ~Problem();
-    std::vector<float> f(Individual individual);
     int number_objectives();
 };
-
-Problem::Problem(const std::string instance_path)
-{
-}
-
-Problem::~Problem()
-{
-}
-
 
 /*
 * [PD] => Problem Dependent
